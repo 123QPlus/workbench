@@ -1,0 +1,202 @@
+{
+  "updated_at": "2026-09-01T12:45:00+08:00",
+  "owner": "阙雨清",
+  "news": [
+    {
+      "category": "AI",
+      "title": "OpenAI GPT-6（代号 Astra）灰测刷屏，传 9 月 3 日发布",
+      "summary": "一批拿到内部检查点权限的开发者放出实测 demo：一句提示词直出完整 3D 资产（钢琴可演奏）。社区普遍认为 Astra 即 GPT-6，呼声最高的发布日为 9 月 3 日。此前该模型曾解出 10 道长期未解数学/理论计算机科学难题。",
+      "source": "阿文的AI观测站 / The Neuron",
+      "url": "https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-monday-august-31-2026/"
+    },
+    {
+      "category": "AI",
+      "title": "腾讯开源 Hy4-preview、智谱发布 GLM-5.3-Flash，国产开源模型密集上新",
+      "summary": "腾讯 Hy4-preview 为 770B MoE 开源模型，自称参与自身训练循环优化；智谱 GLM-5.3-Flash 为 MIT 许可的多模态 MoE（320B 参数 / 18B 活跃 / 百万上下文）。同期智谱上半年营收同比 +400%，开源模型商业化加速。",
+      "source": "Reuters / The Neuron",
+      "url": "https://www.reuters.com/business/retail-consumer/zhipu-ai-first-half-revenue-grows-400-2026-08-31/"
+    },
+    {
+      "category": "AI",
+      "title": "工信部：加大大模型、智能体、Token 等服务采购力度",
+      "summary": "工信部发布人工智能应用服务商培育专项行动通知，明确加大大模型、智能体、Token 等服务采购力度，推动 AI 应用服务商成长。",
+      "source": "中国新闻网",
+      "url": "https://www.zj.chinanews.com/jzkzj/2026-09-01/detail-ihfivshq1301290.shtml"
+    },
+    {
+      "category": "AI",
+      "title": "9 月新规实施：AI 客服规范、荐股内容禁令落地",
+      "summary": "一批 9 月新规今起实施，涉及微短剧备案、AI 客服规范、荐股内容禁令及公积金等民生领域，监管开始逐个触碰“AI 具体场景”。",
+      "source": "阿文的AI观测站",
+      "url": ""
+    },
+    {
+      "category": "政治",
+      "title": "习近平同吉尔吉斯斯坦总统扎帕罗夫会谈，出席上合峰会并会见多国元首",
+      "summary": "当地时间 8 月 31 日，国家主席习近平在比什凯克出席 2026 年上合组织峰会，分别会见乌兹别克斯坦、蒙古国、俄罗斯领导人。第 17 期《求是》发表习近平重要文章《坚持落实管党治党政治责任》。",
+      "source": "央视新闻",
+      "url": "https://ysxw.cctv.cn/article.html?item_id=14831840499721636598&channelId=1119"
+    },
+    {
+      "category": "政治",
+      "title": "商务部等 7 部门发文推动商品消费扩容升级",
+      "summary": "提出 20 项具体措施，到 2030 年社会消费品零售总额达 60 万亿元左右，扩大内需、提振消费。",
+      "source": "央视新闻 / 中国新闻网",
+      "url": "https://www.zj.chinanews.com/jzkzj/2026-09-01/detail-ihfivshq1301290.shtml"
+    },
+    {
+      "category": "重大",
+      "title": "8 月制造业 PMI 49.8%，较上月回升 0.6 个百分点",
+      "summary": "国家统计局数据显示制造业景气水平回升；前 7 个月对上合组织其他成员国进出口 2.42 万亿元，同比 +14.9%。",
+      "source": "国家统计局 / 中国新闻网",
+      "url": "https://www.zj.chinanews.com/jzkzj/2026-09-01/detail-ihfivshq1301290.shtml"
+    },
+    {
+      "category": "重大",
+      "title": "尼泊尔吉隆口岸泥石流：中方人员已妥善转移，尼方遇难升至 951 人",
+      "summary": "截至 8 月 31 日，尼泊尔泥石流遇难人数升至 951 人；中方在尼灾区人员已全部安全转移安置。G216 线抢通至距口岸 1.1 公里处，多方力量加快搜寻失联人员。",
+      "source": "央视新闻",
+      "url": "https://ysxw.cctv.cn/article.html?item_id=14831840499721636598&channelId=1119"
+    },
+    {
+      "category": "重大",
+      "title": "教育部等七部门发布《特殊教育发展提升“十五五”行动计划》",
+      "summary": "提出到 2030 年适龄残疾儿童义务教育入学率巩固在 97% 以上，基本形成特殊教育优质融合普惠发展格局。",
+      "source": "央视新闻",
+      "url": "https://www.ayx.gov.cn/2026/09-01/3657756.html"
+    }
+  ],
+  "jobs": [
+    {
+      "title": "数据分析师",
+      "company": "厦门高新人才开发有限公司",
+      "nature": "国企",
+      "channel": "厦门人才网",
+      "location": "厦门市思明区（软件园）",
+      "salary": "6k-8k/月",
+      "education": "本科及以上",
+      "type": "社招",
+      "match": "高",
+      "why": "应用统计专业对口；要求 SQL + Python + Excel 数据清洗/报表，与你的技能栈高度吻合；派驻国企，双休。",
+      "url": "https://www.xmrc.com.cn/Recruit/RecruitInfo/?id=9fe486d678ac4b4a9c7ae131cb3fc61f"
+    },
+    {
+      "title": "大数据分析师",
+      "company": "厦门智慧翔安数据有限公司（翔安市政集团）",
+      "nature": "国企",
+      "channel": "厦门人才网",
+      "location": "厦门市翔安区",
+      "salary": "8k-10k·14薪",
+      "education": "硕士应届",
+      "type": "校招",
+      "match": "中",
+      "why": "统计/大数据相关专业，结合 AI 算法做市政数据挖掘；薪资优秀但要求硕士，可作为冲一冲目标。",
+      "url": "https://www.xmrc.com.cn/Recruit/RecruitInfo/0d6e995c2b8d4ad4be8483714bcc80b1"
+    },
+    {
+      "title": "厦门-数据分析岗（2026）",
+      "company": "中国太平洋财产保险 厦门分公司",
+      "nature": "国企/股份",
+      "channel": "智联招聘",
+      "location": "厦门市思明区",
+      "salary": "6k-8k/月",
+      "education": "本科（2025-2026届）",
+      "type": "校招",
+      "match": "高",
+      "why": "明确要求 Python/BI/Excel 运营数据分析；应届可投，岗位与你的背景契合，建议优先投递。",
+      "url": "https://www.quanzhi.com/job/68dca2b47f2732863fe761db"
+    },
+    {
+      "title": "27届厦门分公司数据管培生",
+      "company": "中国平安财产保险 厦门分公司",
+      "nature": "国企/金融",
+      "channel": "校招官网",
+      "location": "福建·厦门",
+      "salary": "面议",
+      "education": "2027届本科",
+      "type": "校招",
+      "match": "高",
+      "why": "2027届可投，数学/统计/精算优先，要求基础 SQL/Python；管培生定岗数据类岗位，成长空间大。",
+      "url": "https://campus.pingan.com/positionDetail?positionId=cebdb08d1dc8306c9d9c626ede9f52ec"
+    },
+    {
+      "title": "综合业务管理岗（2027届校招，含数据分析方向）",
+      "company": "中国人民财产保险 厦门市分公司",
+      "nature": "中管金融央企",
+      "channel": "厦门人才网",
+      "location": "厦门市思明区",
+      "salary": "面议",
+      "education": "本科（统计/数学/数据分析优先）",
+      "type": "校招",
+      "match": "高",
+      "why": "中管金融央企，综合方向明确含“业务数据统计、分析、过程监控”；专业对口，稳定性强。",
+      "url": "https://www.xmrc.com.cn/Recruit/RecruitInfo/155e4463d8844ee4995912a8b09541c0"
+    },
+    {
+      "title": "数字金融岗 / 2027届校招（含数据分析）",
+      "company": "招商银行 厦门分行",
+      "nature": "国企/股份",
+      "channel": "校招官网",
+      "location": "厦门市",
+      "salary": "面议",
+      "education": "2027届本科（统计/数学/STEM优先）",
+      "type": "校招",
+      "match": "中",
+      "why": "岗位含“数据分析（业务）/金融科技”，统计类优先；简历投递截止 10 月 10 日，建议尽早网申。",
+      "url": "http://career.cmbchina.com"
+    },
+    {
+      "title": "行业研究岗 / 2027届秋招",
+      "company": "厦门国贸控股（国贸股份）",
+      "nature": "国企",
+      "channel": "校招官网",
+      "location": "厦门市",
+      "salary": "面议",
+      "education": "本科（统计/金融工程/计算机优先）",
+      "type": "校招",
+      "match": "高",
+      "why": "要求 Python/SQL 做大宗商品基本面量化与 AI 策略回测，统计背景契合，AI+数据方向前沿。",
+      "url": "https://career.nankai.edu.cn/correcruit/content/id/117204.html"
+    },
+    {
+      "title": "高级数据工程师（数据分析）",
+      "company": "厦门海辰储能科技股份有限公司",
+      "nature": "民企/新能源",
+      "channel": "猎聘",
+      "location": "厦门市同安区",
+      "salary": "16k-26k·15薪",
+      "education": "本科 5年+",
+      "type": "社招",
+      "match": "低",
+      "why": "薪资亮眼但要求 5 年以上经验、熟悉 SQL/Python/SPSS/Tableau；可作为了解市场薪资上限的参照，暂不匹配应届。",
+      "url": "https://m.liepin.com/job/1968482515.shtml"
+    }
+  ],
+  "learning": {
+    "title": "电商销售漏斗 + 用户分群分析（SQL + Python 端到端项目）",
+    "level": "入门→进阶（约 2-3 天）",
+    "skills": ["SQL 多表查询", "Python pandas/seaborn", "数据可视化", "业务解读"],
+    "dataset": "Kaggle Brazilian E-Commerce (Olist) 或国内电商公开数据集",
+    "why": "同时覆盖 SQL + Python 双技能，直接对应岗位 JD 中的“数据提取/清洗/分析/看板”要求，是面试高频题“讲一个你做过的项目”的最佳素材。",
+    "deliverable": "10-15 条核心 SQL + 清洗 notebook + 看板/PPFigure + 3 条业务建议",
+    "alternatives": [
+      "HR 员工流失分析（SQL/Python + 业务建议，面试经典）",
+      "数据质量审计小练习：文档化“清洗决策 before/after”， recruiters 最看重的细节能力",
+      "用 Open-Meteo 免费 API 拉取厦门天气做时间序列 EDA（练 API 调用 + 可视化）"
+    ]
+  },
+  "weather": {
+    "city": "厦门",
+    "current": {
+      "temperature": 29.3,
+      "weather_code": 53,
+      "wind_speed": 19.9,
+      "humidity": 76
+    },
+    "daily": [
+      { "date": "2026-09-01", "weather_code": 80, "max": 29.6, "min": 25.0 },
+      { "date": "2026-09-02", "weather_code": 96, "max": 27.7, "min": 24.8 },
+      { "date": "2026-09-03", "weather_code": 96, "max": 27.6, "min": 25.1 }
+    ]
+  }
+}

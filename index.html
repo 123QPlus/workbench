@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>雨清的工作台 · 求职 & 备考一站通</title>
+<style>
+  :root{
+    --green-900:#0f5132;
+    --green-700:#1f8a4c;
+    --green-600:#2e9e5b;
+    --green-500:#37b06a;
+    --green-100:#e8f5ec;
+    --green-50:#f3faf5;
+    --ink:#1c2b22;
+    --muted:#5d7065;
+    --line:#d7e9dd;
+    --warn:#e08a1e;
+    --danger:#d9534f;
+    --card:#ffffff;
+    --shadow:0 6px 22px rgba(31,138,76,.10);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:linear-gradient(180deg,var(--green-50),#eaf6ee 40%,#ffffff);
+    color:var(--ink);line-height:1.55;
+  }
+  header.top{
+    background:linear-gradient(120deg,var(--green-700),var(--green-500));
+    color:#fff;padding:26px 22px 30px;box-shadow:var(--shadow);
+  }
+  header.top .wrap{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:42px;height:42px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:22px;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+  .brand h1{font-size:22px;margin:0;font-weight:700;letter-spacing:.5px}
+  .brand p{margin:2px 0 0;font-size:13px;opacity:.9}
+  .meta{font-size:13px;opacity:.95;text-align:right}
+  .meta b{font-weight:600}
+  main{max-width:1180px;margin:-18px auto 40px;padding:0 16px;display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .card{grid-column:span 6;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+  .card.span12{grid-column:span 12}
+  .card.span4{grid-column:span 4}
+  .card h2{margin:0;padding:14px 18px;font-size:16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line);background:var(--green-50)}
+  .card h2 .dot{width:9px;height:9px;border-radius:50%;background:var(--green-600)}
+  .card .body{padding:14px 18px 18px;flex:1}
+  .note{font-size:12px;color:var(--muted);padding:0 18px 14px}
+
+  /* News */
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px 0}
+  .tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:4px 12px;border-radius:999px;font-size:13px;cursor:pointer}
+  .tab.active{background:var(--green-600);color:#fff;border-color:var(--green-600)}
+  .news-item{padding:12px 0;border-bottom:1px dashed var(--line)}
+  .news-item:last-child{border-bottom:0}
+  .news-item .cat{display:inline-block;font-size:11px;padding:1px 8px;border-radius:6px;margin-right:8px;color:#fff;vertical-align:middle}
+  .cat.AI{background:#2e9e5b}.cat.政治{background:#1f6fb0}.cat.重大{background:#c9761d}
+  .news-item a{font-weight:600;color:var(--ink);text-decoration:none;font-size:14.5px}
+  .news-item a:hover{color:var(--green-700);text-decoration:underline}
+  .news-item .sum{font-size:13px;color:var(--muted);margin:4px 0 2px}
+  .news-item .src{font-size:12px;color:#90a89a}
+
+  /* Jobs */
+  .filters{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px 0}
+  .job{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px;background:linear-gradient(180deg,#fff,var(--green-50))}
+  .job .row1{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .job h3{margin:0;font-size:15px}
+  .job .co{font-size:13px;color:var(--muted);margin:2px 0 6px}
+  .badge{font-size:11px;padding:2px 8px;border-radius:999px;white-space:nowrap}
+  .b-nature{background:var(--green-100);color:var(--green-900);border:1px solid var(--line)}
+  .b-type{background:#eef3ff;color:#1f6fb0;border:1px solid #d6e2ff}
+  .match{font-weight:700}
+  .match.高{color:var(--green-700)}.match.中{color:var(--warn)}.match.低{color:var(--danger)}
+  .job .info{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0}
+  .job .why{font-size:12.5px;background:var(--green-50);border-left:3px solid var(--green-500);padding:6px 10px;border-radius:0 8px 8px 0;margin-top:6px}
+  .job a.apply{display:inline-block;margin-top:8px;font-size:13px;color:#fff;background:var(--green-600);padding:5px 14px;border-radius:8px;text-decoration:none}
+  .job a.apply:hover{background:var(--green-700)}
+
+  /* Learning */
+  .learn h3{margin:0 0 6px;font-size:16px;color:var(--green-700)}
+  .tag{display:inline-block;font-size:12px;background:var(--green-100);color:var(--green-900);border:1px solid var(--line);padding:2px 9px;border-radius:999px;margin:0 6px 6px 0}
+  .learn .why{font-size:13px;color:var(--muted);margin:8px 0}
+  .learn ul{margin:8px 0 0;padding-left:18px;font-size:13px;color:var(--ink)}
+  .learn .level{font-size:12.5px;color:var(--warn);font-weight:600}
+
+  /* Weather */
+  .wx-now{display:flex;align-items:center;gap:14px;padding:6px 0 12px}
+  .wx-temp{font-size:40px;font-weight:700;color:var(--green-700)}
+  .wx-desc{font-size:14px;color:var(--muted)}
+  .wx-sub{font-size:12.5px;color:#90a89a;margin-top:2px}
+  .wx-days{display:flex;gap:8px;margin-top:8px}
+  .wx-day{flex:1;text-align:center;border:1px solid var(--line);border-radius:10px;padding:8px 4px;background:var(--green-50)}
+  .wx-day .d{font-size:12px;color:var(--muted)}
+  .wx-day .t{font-size:14px;font-weight:600;margin-top:2px}
+
+  /* Tracker */
+  .tk-form{display:grid;grid-template-columns:1.2fr 1.2fr 1fr 1fr 1.4fr auto;gap:8px;padding:14px 18px;background:var(--green-50);border-bottom:1px solid var(--line)}
+  .tk-form input,.tk-form select{padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:inherit;width:100%}
+  .tk-form button{background:var(--green-600);color:#fff;border:0;border-radius:8px;padding:0 16px;font-size:13px;cursor:pointer;white-space:nowrap}
+  .tk-form button:hover{background:var(--green-700)}
+  .tk-list{display:flex;flex-direction:column}
+  .tk-row{display:grid;grid-template-columns:1.2fr 1.2fr 1fr 1fr 1.4fr auto;gap:8px;align-items:center;padding:10px 18px;border-bottom:1px dashed var(--line);font-size:13px}
+  .tk-row .st{font-size:11.5px;padding:2px 8px;border-radius:999px;width:fit-content;white-space:nowrap}
+  .st.待投递{background:#eef3ff;color:#1f6fb0}
+  .st.已投递{background:var(--green-100);color:var(--green-900)}
+  .st.笔试{background:#fff3e0;color:#c9761d}
+  .st.面试{background:#fde7f3;color:#b0347e}
+  .st.offer{background:#e6f7ec;color:#0f8a3c;font-weight:700}
+  .st.拒信{background:#fdeaea;color:#d9534f}
+  .tk-row .del{color:var(--danger);background:none;border:0;cursor:pointer;font-size:13px}
+  .tk-empty{padding:18px;text-align:center;color:#90a89a;font-size:13px}
+  .tk-tip{font-size:12px;color:var(--muted);padding:10px 18px 16px}
+
+  @media(max-width:860px){
+    .card,.card.span4,.card.span12{grid-column:span 12}
+    .tk-form,.tk-row{grid-template-columns:1fr 1fr;font-size:12px}
+    .tk-form button{grid-column:span 2}
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo">🌿</div>
+      <div>
+        <h1>雨清的工作台</h1>
+        <p>求职 &amp; 备考一站通 · 厦门</p>
+      </div>
+    </div>
+    <div class="meta">
+      <div>数据更新：<b id="upd">—</b></div>
+      <div>每日自动刷新 · 绿色主题</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- 新闻 -->
+  <section class="card span4">
+    <h2><span class="dot"></span>每日新闻速看</h2>
+    <div class="tabs" id="newsTabs">
+      <span class="tab active" data-cat="全部">全部</span>
+      <span class="tab" data-cat="AI">AI</span>
+      <span class="tab" data-cat="政治">政治</span>
+      <span class="tab" data-cat="重大">重大</span>
+    </div>
+    <div class="body" id="newsList"></div>
+  </section>
+
+  <!-- 天气 -->
+  <section class="card span4">
+    <h2><span class="dot"></span>厦门天气 · 通勤</h2>
+    <div class="body" id="wxBody"></div>
+    <div class="note">数据：Open-Meteo 实时天气 · 出门带伞，未来两天雷阵雨</div>
+  </section>
+
+  <!-- 学习 -->
+  <section class="card span4">
+    <h2><span class="dot"></span>今日推荐学习项目</h2>
+    <div class="body learn" id="learnBody"></div>
+  </section>
+
+  <!-- 岗位 -->
+  <section class="card span12">
+    <h2><span class="dot"></span>岗位热线 · 每日可投递</h2>
+    <div class="filters" id="jobFilters">
+      <span class="tab active" data-ch="全部">全部</span>
+      <span class="tab" data-ch="厦门人才网">厦门人才网</span>
+      <span class="tab" data-ch="智联招聘">智联招聘</span>
+      <span class="tab" data-ch="校招官网">校招官网</span>
+      <span class="tab" data-ch="猎聘">猎聘</span>
+      <span class="tab" data-ch="高匹配">⭐ 高匹配优先</span>
+    </div>
+    <div class="body" id="jobList"></div>
+  </section>
+
+  <!-- 投递追踪 -->
+  <section class="card span12">
+    <h2><span class="dot"></span>投递进度追踪</h2>
+    <div class="tk-form" id="tkForm">
+      <input id="f-co" placeholder="公司" />
+      <input id="f-role" placeholder="岗位" />
+      <input id="f-date" type="date" />
+      <select id="f-st">
+        <option>待投递</option><option>已投递</option><option>笔试</option>
+        <option>面试</option><option>offer</option><option>拒信</option>
+      </select>
+      <input id="f-note" placeholder="备注（渠道/进度）" />
+      <button id="f-add">添加</button>
+    </div>
+    <div class="tk-list" id="tkList"></div>
+    <div class="tk-tip">数据保存在本机浏览器（localStorage），仅你可见，不会上传。换设备需重新录入。</div>
+  </section>
+</main>
+
+<script>
+const WMO = {
+  0:"晴",1:"大致晴朗",2:"局部多云",3:"阴",
+  45:"雾",48:"雾凇",
+  51:"小毛毛雨",53:"间歇性小雨",55:"中毛毛雨",
+  61:"小雨",63:"中雨",65:"大雨",
+  71:"小雪",73:"中雪",75:"大雪",
+  80:"阵雨",81:"中阵雨",82:"强阵雨",
+  95:"雷阵雨",96:"雷阵雨伴冰雹",99:"强雷暴伴冰雹"
+};
+const pad = n => String(n).padStart(2,"0");
+const fmtDate = iso => { const d=new Date(iso); return `${d.getMonth()+1}月${d.getDate()}日`; };
+
+async function load(){
+  let data;
+  try{ data = await (await fetch("data.json")).json(); }
+  catch(e){ document.getElementById("newsList").innerHTML="<p style='color:#d9534f'>数据加载失败，请通过云端链接或本地服务器打开。</p>"; return; }
+  document.getElementById("upd").textContent = fmtDate(data.updated_at)+" "+new Date(data.updated_at).toTimeString().slice(0,5);
+
+  // News
+  const newsList = document.getElementById("newsList");
+  const renderNews = cat => {
+    const items = data.news.filter(n=>cat==="全部"||n.category===cat);
+    newsList.innerHTML = items.map(n=>`
+      <div class="news-item">
+        <span class="cat ${n.category}">${n.category}</span>
+        <a href="${n.url||"#"}" target="_blank" rel="noopener">${n.title}</a>
+        <div class="sum">${n.summary}</div>
+        <div class="src">来源：${n.source}</div>
+      </div>`).join("") || "<p class='src'>暂无该分类新闻</p>";
+  };
+  renderNews("全部");
+  document.querySelectorAll("#newsTabs .tab").forEach(t=>t.onclick=()=>{
+    document.querySelectorAll("#newsTabs .tab").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active"); renderNews(t.dataset.cat);
+  });
+
+  // Weather
+  const w = data.weather, c = w.current;
+  document.getElementById("wxBody").innerHTML = `
+    <div class="wx-now">
+      <div class="wx-temp">${c.temperature}°</div>
+      <div>
+        <div class="wx-desc">${WMO[c.weather_code]||"—"} · ${w.city}</div>
+        <div class="wx-sub">风速 ${c.wind_speed} km/h · 湿度 ${c.humidity}%</div>
+      </div>
+    </div>
+    <div class="wx-days">
+      ${w.daily.map(d=>`<div class="wx-day"><div class="d">${fmtDate(d.date)}</div><div class="t">${WMO[d.weather_code]||"—"}</div><div class="d">${d.min}~${d.max}°</div></div>`).join("")}
+    </div>`;
+
+  // Learning
+  const L = data.learning;
+  document.getElementById("learnBody").innerHTML = `
+    <div class="level">难度：${L.level}</div>
+    <h3>${L.title}</h3>
+    <div>${L.skills.map(s=>`<span class="tag">${s}</span>`).join("")}</div>
+    <div class="why"><b>为什么做：</b>${L.why}</div>
+    <div class="why"><b>数据集：</b>${L.dataset}</div>
+    <div class="why"><b>产出：</b>${L.deliverable}</div>
+    <div style="font-size:13px;color:var(--muted);margin-top:6px"><b>备选练手：</b></div>
+    <ul>${L.alternatives.map(a=>`<li>${a}</li>`).join("")}</ul>`;
+
+  // Jobs
+  const jobList = document.getElementById("jobList");
+  const renderJobs = ch => {
+    let items = data.jobs;
+    if(ch==="高匹配") items = items.filter(j=>j.match==="高");
+    else if(ch!=="全部") items = items.filter(j=>j.channel===ch);
+    jobList.innerHTML = items.map(j=>`
+      <div class="job">
+        <div class="row1">
+          <div>
+            <h3>${j.title}</h3>
+            <div class="co">${j.company}</div>
+          </div>
+          <div style="text-align:right">
+            <span class="badge b-nature">${j.nature}</span>
+            <span class="badge b-type">${j.type}</span><br/>
+            <span class="match ${j.match}">匹配：${j.match}</span>
+          </div>
+        </div>
+        <div class="info">
+          <span>📍 ${j.location}</span><span>💰 ${j.salary}</span>
+          <span>🎓 ${j.education}</span><span>🔗 ${j.channel}</span>
+        </div>
+        <div class="why">${j.why}</div>
+        <a class="apply" href="${j.url}" target="_blank" rel="noopener">查看 / 投递 →</a>
+      </div>`).join("") || "<p class='src'>该渠道暂无匹配岗位</p>";
+  };
+  renderJobs("全部");
+  document.querySelectorAll("#jobFilters .tab").forEach(t=>t.onclick=()=>{
+    document.querySelectorAll("#jobFilters .tab").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active"); renderJobs(t.dataset.ch);
+  });
+
+  initTracker();
+}
+
+/* 投递进度追踪：localStorage */
+const TK_KEY = "yq_workbench_tracker_v1";
+function initTracker(){
+  const list = document.getElementById("tkList");
+  const render = ()=>{
+    let arr = JSON.parse(localStorage.getItem(TK_KEY)||"[]");
+    if(!arr.length){ list.innerHTML = `<div class="tk-empty">还没有记录，投出第一份简历就点上「添加」吧 🌱</div>`; return; }
+    list.innerHTML = arr.map((r,i)=>`
+      <div class="tk-row">
+        <div><b>${r.co}</b><br/><span style="color:#5d7065">${r.role}</span></div>
+        <div>${r.date||"—"}</div>
+        <div><span class="st ${r.st}">${r.st}</span></div>
+        <div colspan="2" style="grid-column:span 2">${r.note||""}</div>
+        <button class="del" data-i="${i}">删除</button>
+      </div>`).join("");
+    list.querySelectorAll(".del").forEach(b=>b.onclick=()=>{
+      let a = JSON.parse(localStorage.getItem(TK_KEY)||"[]"); a.splice(+b.dataset.i,1);
+      localStorage.setItem(TK_KEY, JSON.stringify(a)); render();
+    });
+  };
+  document.getElementById("f-add").onclick = ()=>{
+    const co=document.getElementById("f-co").value.trim();
+    const role=document.getElementById("f-role").value.trim();
+    if(!co&&!role) return;
+    let a = JSON.parse(localStorage.getItem(TK_KEY)||"[]");
+    a.unshift({co,role,date:document.getElementById("f-date").value,st:document.getElementById("f-st").value,note:document.getElementById("f-note").value.trim()});
+    localStorage.setItem(TK_KEY, JSON.stringify(a));
+    document.getElementById("f-co").value=document.getElementById("f-role").value=document.getElementById("f-note").value="";
+    render();
+  };
+  render();
+}
+
+load();
+</script>
+</body>
+</html>
