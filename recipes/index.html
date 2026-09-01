@@ -132,6 +132,20 @@
   </div>
   <textarea id="cSteps" placeholder="步骤，每行一条" rows="3" style="width:100%;border:1px solid var(--line);border-radius:10px;padding:8px;font-size:14px;margin-bottom:8px;font-family:inherit;resize:vertical"></textarea>
   <button id="cAdd" style="background:var(--primary);color:#fff;border:none;border-radius:10px;padding:8px 18px;font-size:14px;cursor:pointer">保存到我的菜谱</button>
+  <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+    <button id="cExport" style="background:var(--soft);color:var(--primary-d);border:1px solid var(--line);border-radius:10px;padding:7px 14px;font-size:13px;cursor:pointer">📤 导出我的菜谱</button>
+    <button id="cImport" style="background:var(--soft);color:var(--primary-d);border:1px solid var(--line);border-radius:10px;padding:7px 14px;font-size:13px;cursor:pointer">📥 导入菜谱</button>
+  </div>
+  <div id="ioBox" style="display:none;margin-top:10px;border:1px dashed var(--line);border-radius:10px;padding:10px;background:var(--soft)">
+    <div style="font-size:12px;color:var(--primary-d);margin-bottom:6px">换设备同步：点「导出」复制文本 → 发到微信文件传输助手 → 另一台设备点「导入」粘贴即可。</div>
+    <textarea id="ioText" rows="5" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:12px;font-family:monospace;resize:vertical"></textarea>
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+      <button id="ioCopy" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:13px;cursor:pointer">复制</button>
+      <button id="ioDownload" style="background:#fff;color:var(--primary-d);border:1px solid var(--line);border-radius:8px;padding:6px 14px;font-size:13px;cursor:pointer">下载.json</button>
+      <button id="ioConfirm" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:13px;cursor:pointer">确认导入</button>
+      <button id="ioClose" style="background:#fff;color:var(--muted);border:1px solid var(--line);border-radius:8px;padding:6px 14px;font-size:13px;cursor:pointer">收起</button>
+    </div>
+  </div>
   <div class="hint">保存在本机浏览器；填了小红书链接的菜谱，卡片上会出现「📺 小红书教程」直接跳转。想让某道菜全网可见，告诉我我写进 data.json。</div>
   <div class="hint" id="syncStat"></div>
 </section>
@@ -320,6 +334,29 @@ $("#cAdd").onclick=async()=>{
   custom=WORKER_URL?custom:localCustom;
   renderFilters();renderRecipes();
 };
+// 导出/导入（换设备同步，零依赖，大陆可用）
+function myCustomList(){ return WORKER_URL?custom:localCustom; }
+$("#cExport").onclick=()=>{
+  $("#ioText").value=JSON.stringify(myCustomList(),null,1);
+  $("#ioBox").style.display="block"; $("#ioText").focus(); $("#ioText").select();
+  if(navigator.clipboard){ navigator.clipboard.writeText($("#ioText").value).catch(()=>{}); }
+};
+$("#cImport").onclick=()=>{ $("#ioText").value=""; $("#ioBox").style.display="block"; $("#ioText").focus(); };
+$("#ioCopy").onclick=()=>{ const t=$("#ioText").value; if(navigator.clipboard){ navigator.clipboard.writeText(t).then(()=>alert("已复制，去微信粘贴给自己")).catch(()=>{$("#ioText").select();}); } else { $("#ioText").select(); document.execCommand("copy"); } };
+$("#ioDownload").onclick=()=>{ const blob=new Blob([$("#ioText").value],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="我的菜谱.json"; a.click(); };
+$("#ioConfirm").onclick=()=>{
+  try{
+    const arr=JSON.parse($("#ioText").value);
+    if(!Array.isArray(arr)){alert("格式不对，请粘贴导出的文本");return;}
+    const base=myCustomList(); const ids=new Set(base.map(r=>String(r.id))); let added=0;
+    arr.forEach(r=>{ if(r&&r.id&&!ids.has(String(r.id))){ base.push(r); ids.add(String(r.id)); added++; } });
+    localCustom=WORKER_URL?localCustom:base; if(WORKER_URL){ custom=base; }
+    localStorage.setItem("recipes_custom",JSON.stringify(localCustom));
+    custom=WORKER_URL?custom:localCustom;
+    renderFilters();renderRecipes(); alert("导入完成，新增 "+added+" 道菜"); $("#ioBox").style.display="none";
+  }catch(e){ alert("解析失败，请检查文本是否完整"); }
+};
+$("#ioClose").onclick=()=>{ $("#ioBox").style.display="none"; };
 // 启动
 (async function load(){
   try{await fetchData();}catch(e){$("#upd").textContent="数据加载失败";}
@@ -327,7 +364,7 @@ $("#cAdd").onclick=async()=>{
   try{WEATHER=await fetchWeatherLive();}catch(e){}
   renderFilters();renderRecipes();renderToday();renderWeather();renderShop();renderFav();
   if(DATA) $("#upd").textContent=fmtDate(DATA.updated_at);
-  if($("#syncStat")) $("#syncStat").textContent = WORKER_URL ? "✅ 已开启云端同步：任意设备添加，其他设备打开即见" : "📱 当前仅本机存储（未配置云端同步，换设备不互通）";
+  if($("#syncStat")) $("#syncStat").textContent = WORKER_URL ? "✅ 已开启云端同步：任意设备添加，其他设备打开即见" : "📱 仅本机存储；用上方「导出 / 导入」即可换设备同步；重要菜可让我写进云端全网可见";
 })();
 // PWA 注册（作用域限定 /recipes/）
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
