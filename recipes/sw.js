@@ -1,5 +1,5 @@
 // 奕静QQ家庭菜谱 Service Worker —— 作用域限定 /recipes/，网络优先
-const CACHE = "recipes-v6";
+const CACHE = "recipes-v7";
 const ASSETS = ["./", "./index.html", "./data.json", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", e => {

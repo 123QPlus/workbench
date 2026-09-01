@@ -168,13 +168,12 @@
   </div>
   <div class="hint">保存在本机浏览器；填了小红书链接的菜谱，卡片上会出现「📺 小红书教程」直接跳转。想让某道菜全网可见，告诉我我写进 data.json。</div>
   <div class="hint" id="syncStat"></div>
-</section>
-
-<section>
-  <div class="sec-head"><h2>📖 菜谱库</h2><button class="refresh" data-mod="recipes"></button></div>
-  <input class="search" id="search" placeholder="搜菜名 / 食材 / 标签，如「姜母鸭」「进补」「快手」">
-  <div class="filters" id="filters"></div>
-  <div class="grid" id="recipeGrid"></div>
+  <div style="margin-top:16px;border-top:1px dashed var(--line);padding-top:14px">
+    <div class="sec-head"><h2>📋 我的菜谱</h2><button class="refresh" data-mod="recipes"></button></div>
+    <input class="search" id="search" placeholder="搜菜名 / 食材 / 标签，如「姜母鸭」「进补」「快手」">
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="myRecipes"></div>
+  </div>
 </section>
 
 <section>
@@ -269,8 +268,8 @@ function renderRecipes(){
   const q=$("#search").value.trim().toLowerCase();
   let list=allRecipes().filter(r=>curCat==="全部"||r.category===curCat);
   if(q) list=list.filter(r=>(r.name+(r.ingredients||[]).join("")+(r.tags||[]).join("")+(r.cuisine||"")).toLowerCase().includes(q));
-  if(!list.length){$("#recipeGrid").innerHTML='<div class="empty">没有匹配的菜谱，换个词试试</div>';return;}
-  $("#recipeGrid").innerHTML=list.map(r=>{
+  if(!list.length){$("#myRecipes").innerHTML='<div class="empty">没有匹配的菜谱，换个词试试</div>';return;}
+  $("#myRecipes").innerHTML=list.map(r=>{
     const sid=String(r.id);
     const isMine=sid.startsWith("c_");
     const xhs=r.url?`<a class="badge xhs" href="${r.url}" target="_blank" rel="noopener">📺 小红书教程</a>`:"";
@@ -287,16 +286,16 @@ function renderRecipes(){
       </div>
     </div>`;
   }).join("");
-  $("#recipeGrid").querySelectorAll(".star[data-id]").forEach(b=>b.onclick=()=>{
+  $("#myRecipes").querySelectorAll(".star[data-id]").forEach(b=>b.onclick=()=>{
     const sid=b.dataset.id;
     if(fav.includes(sid)) fav=fav.filter(x=>x!==sid); else fav.push(sid);
     localStorage.setItem("recipes_fav",JSON.stringify(fav)); renderRecipes(); renderFav();
   });
-  $("#recipeGrid").querySelectorAll(".order-add").forEach(b=>b.onclick=()=>{
+  $("#myRecipes").querySelectorAll(".order-add").forEach(b=>b.onclick=()=>{
     const sid=b.dataset.id; const r=allRecipes().find(x=>String(x.id)===sid); if(!r) return;
     addToOrder({id:sid,name:r.name,cuisine:r.cuisine||"自制",meal:"晚餐"}); renderOrder();
   });
-  $("#recipeGrid").querySelectorAll(".delmine").forEach(b=>b.onclick=async()=>{
+  $("#myRecipes").querySelectorAll(".delmine").forEach(b=>b.onclick=async()=>{
     const sid=b.dataset.del;
     if(WORKER_URL){ await delCloud(sid); } else { localCustom=localCustom.filter(x=>String(x.id)!==sid); localStorage.setItem("recipes_custom",JSON.stringify(localCustom)); }
     fav=fav.filter(x=>x!==sid); localStorage.setItem("recipes_fav",JSON.stringify(fav));
