@@ -4,6 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>雨清的工作台 · 求职 & 备考一站通</title>
+<meta name="theme-color" content="#1f8a4c" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
 <style>
   :root{
     --green-900:#0f5132;
@@ -326,6 +329,11 @@ function initTracker(){
 }
 
 load();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
 </script>
 </body>
 </html>
