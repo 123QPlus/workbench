@@ -167,13 +167,14 @@
         <span class="tab" data-cat="重大">重大</span>
       </div>
       <div class="body" id="newsList"></div>
+      <div class="note">新闻每日自动刷新；点 ↻ 重载最新。静态页无法现抓网页，新内容由每日任务或助手手动更新生成。</div>
     </section>
 
     <!-- 天气 -->
     <section class="card span4">
       <h2><span class="h-t"><span class="dot"></span>厦门天气 · 通勤</span><button class="refresh" data-mod="weather" title="刷新本模块" aria-label="刷新">↻</button></h2>
       <div class="body" id="wxBody"></div>
-      <div class="note">数据：Open-Meteo 实时天气 · 穿搭与出行建议根据当日天气自动生成</div>
+      <div class="note">天气点 ↻ 即浏览器直连 Open-Meteo 实时拉取（真·刷新）；穿搭与出行建议按当日天气自动生成。</div>
     </section>
 
     <!-- 学习 -->
@@ -195,6 +196,7 @@
       <span class="tab" data-ch="高匹配">⭐ 高匹配优先</span>
     </div>
     <div class="body" id="jobList"></div>
+    <div class="note">岗位每日自动刷新，过期岗自动隐藏；点 ↻ 重载最新。新岗位由每日任务或助手手动抓取向 data.json 生成。</div>
   </section>
 
   <!-- 投递追踪 -->
@@ -259,6 +261,28 @@ function wxTravel(code, temp){
   return tip;
 }
 
+// 天气实时拉取（浏览器直连 Open-Meteo，无需 key，刷新即真·最新）
+async function fetchWeatherLive(){
+  const url = "https://api.open-meteo.com/v1/forecast?latitude=24.48&longitude=118.09"
+    + "&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m"
+    + "&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Asia%2FShanghai&forecast_days=3";
+  const d = await (await fetch(url)).json();
+  return {
+    city:"厦门",
+    current:{
+      temperature: Math.round(d.current.temperature_2m),
+      weather_code: d.current.weather_code,
+      wind_speed: Math.round(d.current.wind_speed_10m*10)/10,
+      humidity: d.current.relative_humidity_2m
+    },
+    daily: d.daily.time.map((date,i)=>({
+      date,
+      weather_code: d.daily.weather_code[i],
+      min: Math.round(d.daily.temperature_2m_min[i]),
+      max: Math.round(d.daily.temperature_2m_max[i])
+    }))
+  };
+}
 const pad = n => String(n).padStart(2,"0");
 const fmtDate = iso => { const d=new Date(iso); return `${d.getMonth()+1}月${d.getDate()}日`; };
 const todayStart = () => { const d=new Date(); d.setHours(0,0,0,0); return d; };
@@ -395,14 +419,21 @@ async function refreshMod(mod){
   const btn = document.querySelector(`.refresh[data-mod="${mod}"]`);
   if(btn){ btn.classList.add("spin"); btn.disabled = true; }
   try{
-    if(mod!=="tracker"){ await fetchData(); }
-    if(mod==="news") renderNews();
-    else if(mod==="weather") renderWeather();
-    else if(mod==="learning") renderLearning();
-    else if(mod==="jobs") renderJobs();
-    else if(mod==="tracker") renderTracker();
-    if(mod!=="tracker"){
+    if(mod==="weather"){
+      // 天气：浏览器直连 Open-Meteo 实时拉取（真·刷新）
+      try{
+        const w = await fetchWeatherLive();
+        DATA.weather = w;
+      }catch(e){ /* 离线或失败则沿用 data.json 中的天气 */ }
+      renderWeather();
+    } else if(mod!=="tracker"){
+      await fetchData();
+      if(mod==="news") renderNews();
+      else if(mod==="learning") renderLearning();
+      else if(mod==="jobs") renderJobs();
       document.getElementById("upd").textContent = fmtDate(DATA.updated_at)+" "+new Date(DATA.updated_at).toTimeString().slice(0,5);
+    } else {
+      renderTracker();
     }
   } finally {
     if(btn){ btn.classList.remove("spin"); btn.disabled = false; }
