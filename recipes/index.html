@@ -133,6 +133,7 @@
   <textarea id="cSteps" placeholder="步骤，每行一条" rows="3" style="width:100%;border:1px solid var(--line);border-radius:10px;padding:8px;font-size:14px;margin-bottom:8px;font-family:inherit;resize:vertical"></textarea>
   <button id="cAdd" style="background:var(--primary);color:#fff;border:none;border-radius:10px;padding:8px 18px;font-size:14px;cursor:pointer">保存到我的菜谱</button>
   <div class="hint">保存在本机浏览器；填了小红书链接的菜谱，卡片上会出现「📺 小红书教程」直接跳转。想让某道菜全网可见，告诉我我写进 data.json。</div>
+  <div class="hint" id="syncStat"></div>
 </section>
 
 <div class="row2">
@@ -165,8 +166,26 @@ let WEATHER=null;
 let fav=JSON.parse(localStorage.getItem("recipes_fav")||"[]");
 let shop=JSON.parse(localStorage.getItem("recipes_shopping")||"[]");
 let curCat="全部";
-let custom=JSON.parse(localStorage.getItem("recipes_custom")||"[]");
-function allRecipes(){return (DATA?DATA.recipes:[]).concat(custom);}
+const WORKER_URL="";            // 部署 Cloudflare Worker 后填入，如 https://recipes-sync.你的名.workers.dev
+const SYNC_KEY="yijingqq2026";  // 与 Worker 中的 SYNC_KEY 一致，仅用于防随意写入（非 GitHub 令牌）
+let custom=[];                  // 云端自定义菜谱（同步源）
+let localCustom=JSON.parse(localStorage.getItem("recipes_custom")||"[]"); // 离线缓存/兜底
+function allRecipes(){return (DATA?DATA.recipes:[]).concat(WORKER_URL?custom:localCustom);}
+async function loadCloud(){
+  if(!WORKER_URL) return;
+  try{ const r=await fetch(WORKER_URL,{cache:"no-store"}); if(r.ok){ custom=await r.json(); localStorage.setItem("recipes_custom",JSON.stringify(custom)); } }
+  catch(e){ console.warn("云端读取失败，用本地缓存",e); custom=localCustom; }
+}
+async function addCloud(recipe){
+  if(!WORKER_URL){ localCustom.push(recipe); localStorage.setItem("recipes_custom",JSON.stringify(localCustom)); custom=localCustom; return; }
+  const r=await fetch(WORKER_URL,{method:"POST",headers:{"Content-Type":"application/json","Recipes-Key":SYNC_KEY},body:JSON.stringify({action:"add",recipe})});
+  if(r.ok){ custom=await r.json(); localStorage.setItem("recipes_custom",JSON.stringify(custom)); }
+}
+async function delCloud(id){
+  if(!WORKER_URL){ localCustom=localCustom.filter(x=>String(x.id)!==String(id)); localStorage.setItem("recipes_custom",JSON.stringify(localCustom)); custom=localCustom; return; }
+  const r=await fetch(WORKER_URL,{method:"POST",headers:{"Content-Type":"application/json","Recipes-Key":SYNC_KEY},body:JSON.stringify({action:"delete",id})});
+  if(r.ok){ custom=await r.json(); localStorage.setItem("recipes_custom",JSON.stringify(custom)); }
+}
 
 async function fetchData(){const r=await fetch("data.json?t="+Date.now());DATA=await r.json();}
 async function fetchWeatherLive(){
@@ -241,11 +260,11 @@ function renderRecipes(){
     if(fav.includes(sid)) fav=fav.filter(x=>x!==sid); else fav.push(sid);
     localStorage.setItem("recipes_fav",JSON.stringify(fav)); renderRecipes(); renderFav();
   });
-  $("#recipeGrid").querySelectorAll(".delmine").forEach(b=>b.onclick=()=>{
+  $("#recipeGrid").querySelectorAll(".delmine").forEach(b=>b.onclick=async()=>{
     const sid=b.dataset.del;
-    custom=custom.filter(x=>String(x.id)!==sid);
-    localStorage.setItem("recipes_custom",JSON.stringify(custom));
+    if(WORKER_URL){ await delCloud(sid); } else { localCustom=localCustom.filter(x=>String(x.id)!==sid); localStorage.setItem("recipes_custom",JSON.stringify(localCustom)); }
     fav=fav.filter(x=>x!==sid); localStorage.setItem("recipes_fav",JSON.stringify(fav));
+    custom=WORKER_URL?custom:localCustom;
     renderRecipes(); renderFav();
   });
 }
@@ -274,7 +293,7 @@ async function refreshMod(mod){
   if(btn&&mod!=="all"){btn.classList.add("spin");btn.disabled=true;}
   const allBtn=document.querySelector('.refresh[data-mod="all"]'); if(mod==="all"&&allBtn){allBtn.classList.add("spin");allBtn.disabled=true;}
   try{
-    if(mod==="all"||mod==="recipes"||mod==="custom"){await fetchData();renderFilters();renderRecipes();renderFav();}
+    if(mod==="all"||mod==="recipes"||mod==="custom"){await fetchData(); if(WORKER_URL) await loadCloud(); renderFilters();renderRecipes();renderFav();}
     if(mod==="all"||mod==="weather"||mod==="today"){WEATHER=await fetchWeatherLive();renderWeather();if(mod==="all"||mod==="today")renderToday();}
     if(mod==="all"||mod==="shop") renderShop();
     if(mod==="all"||mod==="fav") renderFav();
@@ -288,24 +307,27 @@ document.querySelectorAll(".refresh").forEach(b=>b.onclick=()=>refreshMod(b.data
 $("#search").oninput=renderRecipes;
 $("#shopAdd").onclick=()=>{const v=$("#shopInput").value.trim();if(!v)return;shop.push({name:v,done:false});localStorage.setItem("recipes_shopping",JSON.stringify(shop));$("#shopInput").value="";renderShop();};
 $("#shopInput").onkeydown=e=>{if(e.key==="Enter")$("#shopAdd").click();};
-$("#cAdd").onclick=()=>{
+$("#cAdd").onclick=async()=>{
   const name=$("#cName").value.trim();
   if(!name){alert("先填菜名");return;}
   const ing=$("#cIng").value.split(/[，,]/).map(s=>s.trim()).filter(Boolean);
   const steps=$("#cSteps").value.split(/\n/).map(s=>s.trim()).filter(Boolean);
   const tags=$("#cTag").value.split(/[，,]/).map(s=>s.trim()).filter(Boolean);
   const url=$("#cUrl").value.trim();
-  custom.push({id:"c_"+Date.now(),name,category:$("#cCat").value,cuisine:"自制",time:+$("#cTime").value||0,difficulty:$("#cDiff").value||"简单",servings:0,ingredients:ing,steps,tags,url,why:"我添加的私房菜"});
-  localStorage.setItem("recipes_custom",JSON.stringify(custom));
+  const recipe={id:"c_"+Date.now(),name,category:$("#cCat").value,cuisine:"自制",time:+$("#cTime").value||0,difficulty:$("#cDiff").value||"简单",servings:0,ingredients:ing,steps,tags,url,why:"我添加的私房菜"};
   $("#cName").value="";$("#cIng").value="";$("#cSteps").value="";$("#cTag").value="";$("#cUrl").value="";$("#cTime").value="";
+  if(WORKER_URL){ await addCloud(recipe); } else { localCustom.push(recipe); localStorage.setItem("recipes_custom",JSON.stringify(localCustom)); }
+  custom=WORKER_URL?custom:localCustom;
   renderFilters();renderRecipes();
 };
 // 启动
 (async function load(){
   try{await fetchData();}catch(e){$("#upd").textContent="数据加载失败";}
+  try{await loadCloud();}catch(e){}
   try{WEATHER=await fetchWeatherLive();}catch(e){}
   renderFilters();renderRecipes();renderToday();renderWeather();renderShop();renderFav();
   if(DATA) $("#upd").textContent=fmtDate(DATA.updated_at);
+  if($("#syncStat")) $("#syncStat").textContent = WORKER_URL ? "✅ 已开启云端同步：任意设备添加，其他设备打开即见" : "📱 当前仅本机存储（未配置云端同步，换设备不互通）";
 })();
 // PWA 注册（作用域限定 /recipes/）
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
