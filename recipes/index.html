@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>QQ家庭菜谱工作台</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#e8743b">
+<style>
+  :root{
+    --bg:#fff8f3; --card:#ffffff; --line:#f0e2d8; --text:#3a2e28; --muted:#9a8a80;
+    --primary:#e8743b; --primary-d:#cf5f29; --soft:#fdeee4; --green:#5aa66f; --chip:#f6e7db;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.5;padding:14px;max-width:1100px;margin:0 auto}
+  header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  header h1{font-size:22px;color:var(--primary)}
+  .meta{font-size:12px;color:var(--muted)}
+  .refresh{background:var(--soft);border:1px solid var(--line);color:var(--primary-d);border-radius:8px;width:30px;height:30px;font-size:15px;cursor:pointer;transition:.2s;flex:0 0 auto}
+  .refresh:hover{background:var(--chip)}
+  .refresh.spin{animation:spin 1s linear infinite;pointer-events:none}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .sec-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .sec-head h2{font-size:16px}
+  .sec-head .refresh{margin-left:auto}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px;box-shadow:0 1px 3px rgba(200,120,60,.05)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.row2{grid-template-columns:1fr}.rscroll{overflow-x:auto;scroll-snap-type:x mandatory}.rscroll>*{scroll-snap-align:start;min-width:80%}}
+  /* 今日推荐 */
+  .today-hero{background:linear-gradient(135deg,var(--primary),#f0975e);color:#fff;border-radius:12px;padding:16px;margin-bottom:10px}
+  .today-hero .t{font-size:20px;font-weight:700}
+  .today-hero .sub{font-size:13px;opacity:.92;margin-top:4px}
+  .today-hero .tags{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+  .today-hero .tag{background:rgba(255,255,255,.22);border-radius:20px;padding:2px 10px;font-size:12px}
+  .today-meta{font-size:12px;color:var(--muted);margin:6px 0}
+  .today-why{font-size:13px;background:var(--soft);border-radius:8px;padding:8px 10px;color:var(--primary-d)}
+  .ing{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+  .ing span{background:var(--chip);border-radius:6px;padding:3px 8px;font-size:12px}
+  .steps{list-style:none;counter-reset:s;font-size:13px}
+  .steps li{counter-increment:s;padding:4px 0 4px 26px;position:relative;border-bottom:1px dashed var(--line)}
+  .steps li:before{content:counter(s);position:absolute;left:0;top:4px;width:18px;height:18px;background:var(--primary);color:#fff;border-radius:50%;font-size:11px;display:flex;align-items:center;justify-content:center}
+  /* 天气 */
+  .wx-now{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .wx-temp{font-size:32px;font-weight:700;color:var(--primary)}
+  .wx-desc{font-size:14px;font-weight:600}
+  .wx-sub{font-size:12px;color:var(--muted)}
+  .wx-sug{background:var(--soft);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--primary-d);margin-top:6px}
+  .note{font-size:12px;color:var(--muted);margin-top:8px}
+  /* 菜谱库 */
+  .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .chip{background:var(--chip);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:13px;cursor:pointer}
+  .chip.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+  .search{width:100%;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14px;margin-bottom:10px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .rc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;position:relative}
+  .rc .star{position:absolute;top:10px;right:10px;background:none;border:none;font-size:18px;cursor:pointer;color:#d9c3b3}
+  .rc .star.on{color:#f5b301}
+  .rc h3{font-size:15px;margin-bottom:2px}
+  .rc .info{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .rc .badge{display:inline-block;background:var(--soft);color:var(--primary-d);border-radius:6px;padding:1px 7px;font-size:11px;margin:0 4px 4px 0}
+  /* 采购清单 */
+  .add-row{display:flex;gap:8px;margin-bottom:10px}
+  .add-row input{flex:1;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14px}
+  .add-row button{background:var(--primary);color:#fff;border:none;border-radius:10px;padding:0 16px;font-size:14px;cursor:pointer}
+  .shop-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px}
+  .shop-item input{width:18px;height:18px;accent-color:var(--primary)}
+  .shop-item.done span{text-decoration:line-through;color:var(--muted)}
+  .shop-item .del{margin-left:auto;background:none;border:none;color:#c0392b;cursor:pointer;font-size:13px}
+  .fav-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px}
+  .fav-item .x{margin-left:auto;background:none;border:none;color:#c0392b;cursor:pointer;font-size:13px}
+  .empty{font-size:13px;color:var(--muted);padding:8px 0}
+  .hint{font-size:12px;color:var(--muted);margin-top:6px}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>QQ家庭菜谱工作台</h1>
+    <div class="meta">数据更新：<span id="upd">—</span> · 闽南+家常菜谱 · 天气吃什么</div>
+  </div>
+  <button class="refresh" data-mod="all" title="全部刷新">↻</button>
+</header>
+
+<div class="row2">
+  <section>
+    <div class="sec-head"><h2>🍽️ 今日推荐</h2><button class="refresh" data-mod="today"></button></div>
+    <div id="todayBody"><div class="empty">加载中…</div></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>🌤️ 天气 · 今日吃什么</h2><button class="refresh" data-mod="weather"></button></div>
+    <div id="wxBody"><div class="empty">加载中…</div></div>
+    <div class="note">天气直连 Open-Meteo 实时拉取，点 ↻ 即更新</div>
+  </section>
+</div>
+
+<section>
+  <div class="sec-head"><h2>📖 菜谱库</h2><button class="refresh" data-mod="recipes"></button></div>
+  <input class="search" id="search" placeholder="搜菜名 / 食材 / 标签，如「姜母鸭」「进补」「快手」">
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="recipeGrid"></div>
+</section>
+
+<div class="row2">
+  <section>
+    <div class="sec-head"><h2>🛒 采购清单</h2><button class="refresh" data-mod="shop"></button></div>
+    <div class="add-row">
+      <input id="shopInput" placeholder="加一样要买的，如 老姜 200g">
+      <button id="shopAdd">加</button>
+    </div>
+    <div id="shopList"></div>
+    <div class="hint">仅存你本机浏览器，不上传</div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>⭐ 我的收藏</h2><button class="refresh" data-mod="fav"></button></div>
+    <div id="favList"></div>
+    <div class="hint">点菜谱右上角 ☆ 收藏，仅存本机</div>
+  </section>
+</div>
+
+<script>
+const WMO = {0:"晴",1:"大致晴朗",2:"局部多云",3:"阴",45:"雾",48:"雾凇",51:"毛毛雨",53:"小雨",55:"中雨",61:"小雨",63:"中雨",65:"大雨",66:"冻雨",67:"强冻雨",71:"小雪",73:"中雪",75:"大雪",80:"阵雨",81:"强阵雨",82:"暴雨",85:"阵雪",86:"强阵雪",95:"雷阵雨",96:"雷阵雨伴冰雹",99:"强雷暴伴冰雹"};
+const RAIN=[61,63,65,66,67,80,81,82,95,96,99];
+const pad=n=>String(n).padStart(2,"0");
+const fmtDate=s=>{const d=new Date(s);return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};
+const $=s=>document.querySelector(s);
+
+let DATA=null;
+let WEATHER=null;
+let fav=JSON.parse(localStorage.getItem("recipes_fav")||"[]");
+let shop=JSON.parse(localStorage.getItem("recipes_shopping")||"[]");
+let curCat="全部";
+
+async function fetchData(){const r=await fetch("data.json?t="+Date.now());DATA=await r.json();}
+async function fetchWeatherLive(){
+  const url="https://api.open-meteo.com/v1/forecast?latitude=24.48&longitude=118.09&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m&timezone=Asia%2FShanghai";
+  const r=await fetch(url);const d=await r.json();const c=d.current;
+  return {temp:Math.round(c.temperature_2m),code:c.weather_code,wind:Math.round(c.wind_speed_10m),humidity:c.relative_humidity_2m};
+}
+function dayOfYear(d){const s=new Date(d.getFullYear(),0,0);return Math.floor((d-s)/864e5);}
+function mealSuggestion(w){
+  if(!w) return "加载天气中…";
+  const cold=w.temp<=18, hot=w.temp>=30, rain=RAIN.includes(w.code);
+  if(cold||rain) return `今日${cold?"偏凉":"有雨"}，适合来碗热汤或进补菜（如四物番鸭汤、姜母鸭、冬瓜排骨汤），暖身又驱寒。`;
+  if(hot) return `今日偏热（${w.temp}°），建议清淡少油，西红柿炒蛋、清炒时蔬、紫菜蛋花汤最开胃。`;
+  return `天气舒适（${w.temp}°），正适合认真做一道硬菜，红烧肉、咖喱鸡、宫保鸡丁都不错。`;
+}
+function pickToday(w){
+  let pool=DATA.recipes;
+  if(w){
+    if(w.temp<=18||RAIN.includes(w.code)) pool=DATA.recipes.filter(r=>r.category==="汤羹"||(r.tags||[]).includes("进补"));
+    else if(w.temp>=30) pool=DATA.recipes.filter(r=>r.category==="素菜"||(r.tags||[]).includes("清淡"));
+  }
+  if(!pool.length) pool=DATA.recipes;
+  return pool[dayOfYear(new Date())%pool.length];
+}
+function renderToday(){
+  const r=pickToday(WEATHER);
+  $("#todayBody").innerHTML=`
+    <div class="today-hero">
+      <div class="t">${r.name}</div>
+      <div class="sub">${r.cuisine} · ${r.category} · 约 ${r.time} 分钟 · ${r.difficulty} · ${r.servings} 人份</div>
+      <div class="tags">${(r.tags||[]).map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+    </div>
+    <div class="today-meta">🥘 食材：${r.ingredients.join("、")}</div>
+    <ol class="steps">${r.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
+    <div class="today-why">💡 ${r.why}</div>`;
+}
+function renderWeather(){
+  if(!WEATHER){$("#wxBody").innerHTML='<div class="empty">天气获取失败，点 ↻ 重试</div>';return;}
+  $("#wxBody").innerHTML=`
+    <div class="wx-now">
+      <div class="wx-temp">${WEATHER.temp}°</div>
+      <div><div class="wx-desc">${WMO[WEATHER.code]||"—"} · 厦门</div><div class="wx-sub">风速 ${WEATHER.wind} km/h · 湿度 ${WEATHER.humidity}%</div></div>
+    </div>
+    <div class="wx-sug">🍴 ${mealSuggestion(WEATHER)}</div>`;
+}
+function renderFilters(){
+  const cats=["全部",...new Set(DATA.recipes.map(r=>r.category))];
+  $("#filters").innerHTML=cats.map(c=>`<span class="chip${c===curCat?" on":""}" data-c="${c}">${c}</span>`).join("");
+  $("#filters").querySelectorAll(".chip").forEach(ch=>ch.onclick=()=>{curCat=ch.dataset.c;renderFilters();renderRecipes();});
+}
+function renderRecipes(){
+  const q=$("#search").value.trim().toLowerCase();
+  let list=DATA.recipes.filter(r=>curCat==="全部"||r.category===curCat);
+  if(q) list=list.filter(r=>(r.name+r.ingredients.join("")+(r.tags||[]).join("")+r.cuisine).toLowerCase().includes(q));
+  if(!list.length){$("#recipeGrid").innerHTML='<div class="empty">没有匹配的菜谱，换个词试试</div>';return;}
+  $("#recipeGrid").innerHTML=list.map(r=>`
+    <div class="rc">
+      <button class="star${fav.includes(r.id)?" on":""}" data-id="${r.id}">${fav.includes(r.id)?"★":"☆"}</button>
+      <h3>${r.name}</h3>
+      <div class="info">${r.cuisine} · ${r.category} · ${r.time}分钟 · ${r.difficulty}</div>
+      <div>${r.ingredients.slice(0,4).map(i=>`<span class="badge">${i}</span>`).join("")}${r.ingredients.length>4?'<span class="badge">…</span>':""}</div>
+      <div style="margin-top:6px">${(r.tags||[]).map(t=>`<span class="badge">${t}</span>`).join("")}</div>
+    </div>`).join("");
+  $("#recipeGrid").querySelectorAll(".star").forEach(b=>b.onclick=()=>{
+    const id=+b.dataset.id;
+    if(fav.includes(id)) fav=fav.filter(x=>x!==id); else fav.push(id);
+    localStorage.setItem("recipes_fav",JSON.stringify(fav)); renderRecipes(); renderFav();
+  });
+}
+function renderShop(){
+  if(!shop.length){$("#shopList").innerHTML='<div class="empty">清单是空的，加几样要买的</div>';return;}
+  $("#shopList").innerHTML=shop.map((it,i)=>`
+    <div class="shop-item${it.done?" done":""}">
+      <input type="checkbox" ${it.done?"checked":""} data-i="${i}">
+      <span>${it.name}</span>
+      <button class="del" data-i="${i}">删</button>
+    </div>`).join("");
+  $("#shopList").querySelectorAll('input[type=checkbox]').forEach(c=>c.onchange=()=>{shop[+c.dataset.i].done=c.checked;localStorage.setItem("recipes_shopping",JSON.stringify(shop));renderShop();});
+  $("#shopList").querySelectorAll(".del").forEach(b=>b.onclick=()=>{shop.splice(+b.dataset.i,1);localStorage.setItem("recipes_shopping",JSON.stringify(shop));renderShop();});
+}
+function renderFav(){
+  if(!fav.length){$("#favList").innerHTML='<div class="empty">还没收藏，去菜谱库点 ☆</div>';return;}
+  const map=Object.fromEntries(DATA.recipes.map(r=>[r.id,r]));
+  $("#favList").innerHTML=fav.filter(id=>map[id]).map(id=>{
+    const r=map[id];
+    return `<div class="fav-item"><span>⭐ ${r.name} <small style="color:var(--muted)">${r.cuisine}·${r.category}</small></span><button class="x" data-id="${id}">取消</button></div>`;
+  }).join("");
+  $("#favList").querySelectorAll(".x").forEach(b=>b.onclick=()=>{fav=fav.filter(x=>+x!==+b.dataset.id);localStorage.setItem("recipes_fav",JSON.stringify(fav));renderFav();renderRecipes();});
+}
+async function refreshMod(mod){
+  const btn=document.querySelector(`.refresh[data-mod="${mod}"]`);
+  if(btn&&mod!=="all"){btn.classList.add("spin");btn.disabled=true;}
+  const allBtn=document.querySelector('.refresh[data-mod="all"]'); if(mod==="all"&&allBtn){allBtn.classList.add("spin");allBtn.disabled=true;}
+  try{
+    if(mod==="all"||mod==="recipes"){await fetchData();renderFilters();renderRecipes();renderFav();}
+    if(mod==="all"||mod==="weather"||mod==="today"){WEATHER=await fetchWeatherLive();renderWeather();if(mod==="all"||mod==="today")renderToday();}
+    if(mod==="all"||mod==="shop") renderShop();
+    if(mod==="all"||mod==="fav") renderFav();
+    if(mod!=="shop"&&mod!=="fav"&&mod!=="weather"){/*updated time*/}
+    if(mod==="all"||mod==="recipes") $("#upd").textContent=fmtDate(DATA.updated_at);
+  }catch(e){console.error(e);}
+  finally{if(btn&&mod!=="all"){btn.classList.remove("spin");btn.disabled=false;}if(allBtn){allBtn.classList.remove("spin");allBtn.disabled=false;}}
+}
+// 事件
+document.querySelectorAll(".refresh").forEach(b=>b.onclick=()=>refreshMod(b.dataset.mod));
+$("#search").oninput=renderRecipes;
+$("#shopAdd").onclick=()=>{const v=$("#shopInput").value.trim();if(!v)return;shop.push({name:v,done:false});localStorage.setItem("recipes_shopping",JSON.stringify(shop));$("#shopInput").value="";renderShop();};
+$("#shopInput").onkeydown=e=>{if(e.key==="Enter")$("#shopAdd").click();};
+// 启动
+(async function load(){
+  try{await fetchData();}catch(e){$("#upd").textContent="数据加载失败";}
+  try{WEATHER=await fetchWeatherLive();}catch(e){}
+  renderFilters();renderRecipes();renderToday();renderWeather();renderShop();renderFav();
+  if(DATA) $("#upd").textContent=fmtDate(DATA.updated_at);
+})();
+// PWA 注册（作用域限定 /recipes/）
+if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+</script>
+</body>
+</html>
