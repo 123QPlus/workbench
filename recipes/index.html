@@ -95,24 +95,44 @@
   <button class="refresh" data-mod="all" title="全部刷新">↻</button>
 </header>
 
-<div class="row2">
-  <section>
-    <div class="sec-head"><h2>🍽️ 今日推荐</h2><button class="refresh" data-mod="today"></button></div>
-    <div id="todayBody"><div class="empty">加载中…</div></div>
-  </section>
-
-  <section>
-    <div class="sec-head"><h2>🌤️ 天气 · 今日吃什么</h2><button class="refresh" data-mod="weather"></button></div>
-    <div id="wxBody"><div class="empty">加载中…</div></div>
-    <div class="note">天气直连 Open-Meteo 实时拉取，点 ↻ 即更新</div>
-  </section>
-</div>
+<section>
+  <div class="sec-head"><h2>🌤️ 天气 · 今日吃什么</h2><button class="refresh" data-mod="weather"></button></div>
+  <div id="wxBody"><div class="empty">加载中…</div></div>
+  <div class="note">天气直连 Open-Meteo 实时拉取，点 ↻ 即更新</div>
+</section>
 
 <section>
-  <div class="sec-head"><h2>📖 菜谱库</h2><button class="refresh" data-mod="recipes"></button></div>
-  <input class="search" id="search" placeholder="搜菜名 / 食材 / 标签，如「姜母鸭」「进补」「快手」">
-  <div class="filters" id="filters"></div>
-  <div class="grid" id="recipeGrid"></div>
+  <div class="sec-head"><h2>🍽️ 今日推荐</h2><button class="refresh" data-mod="today"></button></div>
+  <div id="todayBody"><div class="empty">加载中…</div></div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>🧾 今日点单</h2><button class="refresh" data-mod="order"></button></div>
+  <div class="add-row" style="flex-wrap:wrap">
+    <select id="orderPick" style="border:1px solid var(--line);border-radius:10px;padding:8px 6px;font-size:14px;flex:2 1 200px">
+      <option value="">选择菜谱加入今日点单…</option>
+    </select>
+    <select id="orderMeal" style="border:1px solid var(--line);border-radius:10px;padding:8px 6px;font-size:14px">
+      <option>早餐</option><option>午餐</option><option>晚餐</option><option>加餐</option>
+    </select>
+    <button id="orderAdd" style="background:var(--primary);color:#fff;border:none;border-radius:10px;padding:0 16px;font-size:14px;cursor:pointer">加</button>
+  </div>
+  <div id="orderList"></div>
+  <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+    <button id="orderToShop" style="background:var(--soft);color:var(--primary-d);border:1px solid var(--line);border-radius:10px;padding:6px 14px;font-size:13px;cursor:pointer">🛒 点单食材→采购清单</button>
+    <button id="orderClear" style="background:#fff;color:#c0392b;border:1px solid var(--line);border-radius:10px;padding:6px 14px;font-size:13px;cursor:pointer">清空今日</button>
+  </div>
+  <div class="hint">每日自动清空，仅存本机；在菜谱库卡片点「＋点单」可快捷加入</div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>🛒 采购清单</h2><button class="refresh" data-mod="shop"></button></div>
+  <div class="add-row">
+    <input id="shopInput" placeholder="加一样要买的，如 老姜 200g">
+    <button id="shopAdd">加</button>
+  </div>
+  <div id="shopList"></div>
+  <div class="hint">仅存你本机浏览器，不上传</div>
 </section>
 
 <section>
@@ -150,23 +170,18 @@
   <div class="hint" id="syncStat"></div>
 </section>
 
-<div class="row2">
-  <section>
-    <div class="sec-head"><h2>🛒 采购清单</h2><button class="refresh" data-mod="shop"></button></div>
-    <div class="add-row">
-      <input id="shopInput" placeholder="加一样要买的，如 老姜 200g">
-      <button id="shopAdd">加</button>
-    </div>
-    <div id="shopList"></div>
-    <div class="hint">仅存你本机浏览器，不上传</div>
-  </section>
+<section>
+  <div class="sec-head"><h2>📖 菜谱库</h2><button class="refresh" data-mod="recipes"></button></div>
+  <input class="search" id="search" placeholder="搜菜名 / 食材 / 标签，如「姜母鸭」「进补」「快手」">
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="recipeGrid"></div>
+</section>
 
-  <section>
-    <div class="sec-head"><h2>⭐ 我的收藏</h2><button class="refresh" data-mod="fav"></button></div>
-    <div id="favList"></div>
-    <div class="hint">点菜谱右上角 ☆ 收藏，仅存本机</div>
-  </section>
-</div>
+<section>
+  <div class="sec-head"><h2>⭐ 我的收藏</h2><button class="refresh" data-mod="fav"></button></div>
+  <div id="favList"></div>
+  <div class="hint">点菜谱右上角 ☆ 收藏，仅存本机</div>
+</section>
 
 <script>
 const WMO = {0:"晴",1:"大致晴朗",2:"局部多云",3:"阴",45:"雾",48:"雾凇",51:"毛毛雨",53:"小雨",55:"中雨",61:"小雨",63:"中雨",65:"大雨",66:"冻雨",67:"强冻雨",71:"小雪",73:"中雪",75:"大雪",80:"阵雨",81:"强阵雨",82:"暴雨",85:"阵雪",86:"强阵雪",95:"雷阵雨",96:"雷阵雨伴冰雹",99:"强雷暴伴冰雹"};
@@ -266,13 +281,20 @@ function renderRecipes(){
       <div class="info">${(r.cuisine||"自制")} · ${r.category} · ${r.time}分钟 · ${r.difficulty}</div>
       <div>${mine}${xhs}${(r.ingredients||[]).slice(0,4).map(i=>`<span class="badge">${i}</span>`).join("")}${(r.ingredients||[]).length>4?'<span class="badge">…</span>':""}</div>
       <div style="margin-top:6px">${(r.tags||[]).map(t=>`<span class="badge">${t}</span>`).join("")}</div>
-      ${isMine?`<button class="delmine" data-del="${sid}">删除我的菜谱</button>`:""}
+      <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+        <button class="order-add" data-id="${sid}" style="background:var(--soft);color:var(--primary-d);border:1px solid var(--line);border-radius:8px;padding:3px 10px;font-size:12px;cursor:pointer">＋点单</button>
+        ${isMine?`<button class="delmine" data-del="${sid}">删除我的菜谱</button>`:""}
+      </div>
     </div>`;
   }).join("");
   $("#recipeGrid").querySelectorAll(".star[data-id]").forEach(b=>b.onclick=()=>{
     const sid=b.dataset.id;
     if(fav.includes(sid)) fav=fav.filter(x=>x!==sid); else fav.push(sid);
     localStorage.setItem("recipes_fav",JSON.stringify(fav)); renderRecipes(); renderFav();
+  });
+  $("#recipeGrid").querySelectorAll(".order-add").forEach(b=>b.onclick=()=>{
+    const sid=b.dataset.id; const r=allRecipes().find(x=>String(x.id)===sid); if(!r) return;
+    addToOrder({id:sid,name:r.name,cuisine:r.cuisine||"自制",meal:"晚餐"}); renderOrder();
   });
   $("#recipeGrid").querySelectorAll(".delmine").forEach(b=>b.onclick=async()=>{
     const sid=b.dataset.del;
@@ -302,12 +324,39 @@ function renderFav(){
   }).join("");
   $("#favList").querySelectorAll(".x").forEach(b=>b.onclick=()=>{fav=fav.filter(x=>x!==b.dataset.id);localStorage.setItem("recipes_fav",JSON.stringify(fav));renderFav();renderRecipes();});
 }
+// 今日点单
+let orderToday=loadOrder();
+function loadOrder(){
+  try{ const o=JSON.parse(localStorage.getItem("recipes_order")); if(o&&o.date===fmtDate(new Date())) return o; }catch(e){}
+  return {date:fmtDate(new Date()),items:[]};
+}
+function saveOrder(){ localStorage.setItem("recipes_order",JSON.stringify(orderToday)); }
+function addToOrder(it){ orderToday.items.push(it); saveOrder(); }
+function renderOrderPick(){
+  const opts=allRecipes().map(r=>`<option value="${r.id}">${r.name}（${r.cuisine||"自制"}·${r.category}）</option>`).join("");
+  $("#orderPick").innerHTML='<option value="">选择菜谱加入今日点单…</option>'+opts;
+}
+function renderOrder(){
+  if(!orderToday.items.length){ $("#orderList").innerHTML='<div class="empty">今天还没点单，从上面选菜或点菜谱卡「＋点单」👆</div>'; return; }
+  const rmap=Object.fromEntries(allRecipes().map(r=>[String(r.id),r]));
+  const meals=["早餐","午餐","晚餐","加餐"];
+  $("#orderList").innerHTML=meals.map(meal=>{
+    const its=orderToday.items.filter(it=>it.meal===meal);
+    if(!its.length) return "";
+    return `<div style="font-size:13px;color:var(--primary-d);font-weight:600;margin:8px 0 2px">${meal}</div>`+
+      its.map(it=>`<div class="fav-item"><span>${it.name} <small style="color:var(--muted)">${it.cuisine||""}</small></span><button class="x" data-id="${String(it.id)}" style="margin-left:auto;background:none;border:none;color:#c0392b;cursor:pointer;font-size:13px">去掉</button></div>`).join("");
+  }).join("");
+  $("#orderList").querySelectorAll(".x").forEach(b=>b.onclick=()=>{
+    orderToday.items=orderToday.items.filter(it=>String(it.id)!==b.dataset.id); saveOrder(); renderOrder();
+  });
+}
 async function refreshMod(mod){
   const btn=document.querySelector(`.refresh[data-mod="${mod}"]`);
   if(btn&&mod!=="all"){btn.classList.add("spin");btn.disabled=true;}
   const allBtn=document.querySelector('.refresh[data-mod="all"]'); if(mod==="all"&&allBtn){allBtn.classList.add("spin");allBtn.disabled=true;}
   try{
-    if(mod==="all"||mod==="recipes"||mod==="custom"){await fetchData(); if(WORKER_URL) await loadCloud(); renderFilters();renderRecipes();renderFav();}
+    if(mod==="all"||mod==="recipes"||mod==="custom"){await fetchData(); if(WORKER_URL) await loadCloud(); renderFilters();renderRecipes();renderFav();renderOrderPick();}
+    if(mod==="all"||mod==="order"){renderOrder();renderOrderPick();}
     if(mod==="all"||mod==="weather"||mod==="today"){WEATHER=await fetchWeatherLive();renderWeather();if(mod==="all"||mod==="today")renderToday();}
     if(mod==="all"||mod==="shop") renderShop();
     if(mod==="all"||mod==="fav") renderFav();
@@ -332,8 +381,23 @@ $("#cAdd").onclick=async()=>{
   $("#cName").value="";$("#cIng").value="";$("#cSteps").value="";$("#cTag").value="";$("#cUrl").value="";$("#cTime").value="";
   if(WORKER_URL){ await addCloud(recipe); } else { localCustom.push(recipe); localStorage.setItem("recipes_custom",JSON.stringify(localCustom)); }
   custom=WORKER_URL?custom:localCustom;
-  renderFilters();renderRecipes();
+  renderFilters();renderRecipes();renderOrderPick();
 };
+// 今日点单
+$("#orderAdd").onclick=()=>{
+  const id=$("#orderPick").value; if(!id){return;}
+  const r=allRecipes().find(x=>String(x.id)===String(id)); if(!r) return;
+  addToOrder({id:String(r.id),name:r.name,cuisine:r.cuisine||"自制",meal:$("#orderMeal").value});
+  saveOrder(); renderOrder(); $("#orderPick").value="";
+};
+$("#orderToShop").onclick=()=>{
+  const rmap=Object.fromEntries(allRecipes().map(r=>[String(r.id),r]));
+  let added=0;
+  orderToday.items.forEach(it=>{ const r=rmap[it.id]; if(r&&r.ingredients){ r.ingredients.forEach(ing=>{ if(!shop.some(s=>s.name===ing)){ shop.push({name:ing,done:false}); added++; } }); } });
+  if(added){ localStorage.setItem("recipes_shopping",JSON.stringify(shop)); renderShop(); alert("已把 "+added+" 样食材加入采购清单"); }
+  else alert("没有可加入的新食材");
+};
+$("#orderClear").onclick=()=>{ if(confirm("清空今日点单？")){ orderToday.items=[]; saveOrder(); renderOrder(); } };
 // 导出/导入（换设备同步，零依赖，大陆可用）
 function myCustomList(){ return WORKER_URL?custom:localCustom; }
 $("#cExport").onclick=()=>{
@@ -362,7 +426,7 @@ $("#ioClose").onclick=()=>{ $("#ioBox").style.display="none"; };
   try{await fetchData();}catch(e){$("#upd").textContent="数据加载失败";}
   try{await loadCloud();}catch(e){}
   try{WEATHER=await fetchWeatherLive();}catch(e){}
-  renderFilters();renderRecipes();renderToday();renderWeather();renderShop();renderFav();
+  renderFilters();renderRecipes();renderToday();renderWeather();renderShop();renderFav();renderOrderPick();renderOrder();
   if(DATA) $("#upd").textContent=fmtDate(DATA.updated_at);
   if($("#syncStat")) $("#syncStat").textContent = WORKER_URL ? "✅ 已开启云端同步：任意设备添加，其他设备打开即见" : "📱 仅本机存储；用上方「导出 / 导入」即可换设备同步；重要菜可让我写进云端全网可见";
 })();
