@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>QQ家庭菜谱工作台</title>
+<title>奕静QQ家庭菜谱</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#e8743b">
 <style>
@@ -70,12 +70,14 @@
   .fav-item .x{margin-left:auto;background:none;border:none;color:#c0392b;cursor:pointer;font-size:13px}
   .empty{font-size:13px;color:var(--muted);padding:8px 0}
   .hint{font-size:12px;color:var(--muted);margin-top:6px}
+  .delmine{margin-top:8px;background:none;border:1px solid var(--line);color:#c0392b;border-radius:8px;padding:3px 10px;font-size:12px;cursor:pointer}
+  .badge.xhs{background:var(--primary);color:#fff}
 </style>
 </head>
 <body>
 <header>
   <div>
-    <h1>QQ家庭菜谱工作台</h1>
+    <h1>奕静QQ家庭菜谱</h1>
     <div class="meta">数据更新：<span id="upd">—</span> · 闽南+家常菜谱 · 天气吃什么</div>
   </div>
   <button class="refresh" data-mod="all" title="全部刷新">↻</button>
@@ -99,6 +101,26 @@
   <input class="search" id="search" placeholder="搜菜名 / 食材 / 标签，如「姜母鸭」「进补」「快手」">
   <div class="filters" id="filters"></div>
   <div class="grid" id="recipeGrid"></div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>➕ 自定义菜谱</h2><button class="refresh" data-mod="custom"></button></div>
+  <div class="add-row" style="flex-wrap:wrap">
+    <input id="cName" placeholder="菜名 *" style="flex:1 1 120px">
+    <select id="cCat" style="border:1px solid var(--line);border-radius:10px;padding:8px 6px;font-size:14px">
+      <option>荤菜</option><option>素菜</option><option>汤羹</option><option>主食</option><option>甜点</option><option>凉菜</option><option>早餐</option>
+    </select>
+    <input id="cTime" placeholder="分钟" style="flex:1 1 70px">
+    <input id="cDiff" placeholder="难度" style="flex:1 1 80px" value="简单">
+  </div>
+  <div class="add-row" style="flex-wrap:wrap">
+    <input id="cIng" placeholder="食材，逗号分隔，如 鸡腿,土豆,咖喱" style="flex:2 1 200px">
+    <input id="cTag" placeholder="标签，逗号分隔，如 下饭,宴客" style="flex:1 1 140px">
+    <input id="cUrl" placeholder="小红书教程链接(可选)" style="flex:2 1 200px">
+  </div>
+  <textarea id="cSteps" placeholder="步骤，每行一条" rows="3" style="width:100%;border:1px solid var(--line);border-radius:10px;padding:8px;font-size:14px;margin-bottom:8px;font-family:inherit;resize:vertical"></textarea>
+  <button id="cAdd" style="background:var(--primary);color:#fff;border:none;border-radius:10px;padding:8px 18px;font-size:14px;cursor:pointer">保存到我的菜谱</button>
+  <div class="hint">保存在本机浏览器；填了小红书链接的菜谱，卡片上会出现「📺 小红书教程」直接跳转。想让某道菜全网可见，告诉我我写进 data.json。</div>
 </section>
 
 <div class="row2">
@@ -131,6 +153,8 @@ let WEATHER=null;
 let fav=JSON.parse(localStorage.getItem("recipes_fav")||"[]");
 let shop=JSON.parse(localStorage.getItem("recipes_shopping")||"[]");
 let curCat="全部";
+let custom=JSON.parse(localStorage.getItem("recipes_custom")||"[]");
+function allRecipes(){return (DATA?DATA.recipes:[]).concat(custom);}
 
 async function fetchData(){const r=await fetch("data.json?t="+Date.now());DATA=await r.json();}
 async function fetchWeatherLive(){
@@ -147,12 +171,12 @@ function mealSuggestion(w){
   return `天气舒适（${w.temp}°），正适合认真做一道硬菜，红烧肉、咖喱鸡、宫保鸡丁都不错。`;
 }
 function pickToday(w){
-  let pool=DATA.recipes;
+  let pool=allRecipes();
   if(w){
-    if(w.temp<=18||RAIN.includes(w.code)) pool=DATA.recipes.filter(r=>r.category==="汤羹"||(r.tags||[]).includes("进补"));
-    else if(w.temp>=30) pool=DATA.recipes.filter(r=>r.category==="素菜"||(r.tags||[]).includes("清淡"));
+    if(w.temp<=18||RAIN.includes(w.code)) pool=allRecipes().filter(r=>r.category==="汤羹"||(r.tags||[]).includes("进补"));
+    else if(w.temp>=30) pool=allRecipes().filter(r=>r.category==="素菜"||(r.tags||[]).includes("清淡"));
   }
-  if(!pool.length) pool=DATA.recipes;
+  if(!pool.length) pool=allRecipes();
   return pool[dayOfYear(new Date())%pool.length];
 }
 function renderToday(){
@@ -160,7 +184,7 @@ function renderToday(){
   $("#todayBody").innerHTML=`
     <div class="today-hero">
       <div class="t">${r.name}</div>
-      <div class="sub">${r.cuisine} · ${r.category} · 约 ${r.time} 分钟 · ${r.difficulty} · ${r.servings} 人份</div>
+      <div class="sub">${r.cuisine} · ${r.category} · 约 ${r.time} 分钟 · ${r.difficulty}${r.servings?` · ${r.servings} 人份`:""}</div>
       <div class="tags">${(r.tags||[]).map(t=>`<span class="tag">${t}</span>`).join("")}</div>
     </div>
     <div class="today-meta">🥘 食材：${r.ingredients.join("、")}</div>
@@ -177,27 +201,40 @@ function renderWeather(){
     <div class="wx-sug">🍴 ${mealSuggestion(WEATHER)}</div>`;
 }
 function renderFilters(){
-  const cats=["全部",...new Set(DATA.recipes.map(r=>r.category))];
+  const cats=["全部",...new Set(allRecipes().map(r=>r.category))];
   $("#filters").innerHTML=cats.map(c=>`<span class="chip${c===curCat?" on":""}" data-c="${c}">${c}</span>`).join("");
   $("#filters").querySelectorAll(".chip").forEach(ch=>ch.onclick=()=>{curCat=ch.dataset.c;renderFilters();renderRecipes();});
 }
 function renderRecipes(){
   const q=$("#search").value.trim().toLowerCase();
-  let list=DATA.recipes.filter(r=>curCat==="全部"||r.category===curCat);
-  if(q) list=list.filter(r=>(r.name+r.ingredients.join("")+(r.tags||[]).join("")+r.cuisine).toLowerCase().includes(q));
+  let list=allRecipes().filter(r=>curCat==="全部"||r.category===curCat);
+  if(q) list=list.filter(r=>(r.name+(r.ingredients||[]).join("")+(r.tags||[]).join("")+(r.cuisine||"")).toLowerCase().includes(q));
   if(!list.length){$("#recipeGrid").innerHTML='<div class="empty">没有匹配的菜谱，换个词试试</div>';return;}
-  $("#recipeGrid").innerHTML=list.map(r=>`
-    <div class="rc">
-      <button class="star${fav.includes(r.id)?" on":""}" data-id="${r.id}">${fav.includes(r.id)?"★":"☆"}</button>
+  $("#recipeGrid").innerHTML=list.map(r=>{
+    const sid=String(r.id);
+    const isMine=sid.startsWith("c_");
+    const xhs=r.url?`<a class="badge xhs" href="${r.url}" target="_blank" rel="noopener">📺 小红书教程</a>`:"";
+    const mine=isMine?`<span class="badge" style="background:#ffe3c2;color:#b5651d">我的</span>`:"";
+    return `<div class="rc">
+      <button class="star${fav.includes(sid)?" on":""}" data-id="${sid}">${fav.includes(sid)?"★":"☆"}</button>
       <h3>${r.name}</h3>
-      <div class="info">${r.cuisine} · ${r.category} · ${r.time}分钟 · ${r.difficulty}</div>
-      <div>${r.ingredients.slice(0,4).map(i=>`<span class="badge">${i}</span>`).join("")}${r.ingredients.length>4?'<span class="badge">…</span>':""}</div>
+      <div class="info">${(r.cuisine||"自制")} · ${r.category} · ${r.time}分钟 · ${r.difficulty}</div>
+      <div>${mine}${xhs}${(r.ingredients||[]).slice(0,4).map(i=>`<span class="badge">${i}</span>`).join("")}${(r.ingredients||[]).length>4?'<span class="badge">…</span>':""}</div>
       <div style="margin-top:6px">${(r.tags||[]).map(t=>`<span class="badge">${t}</span>`).join("")}</div>
-    </div>`).join("");
-  $("#recipeGrid").querySelectorAll(".star").forEach(b=>b.onclick=()=>{
-    const id=+b.dataset.id;
-    if(fav.includes(id)) fav=fav.filter(x=>x!==id); else fav.push(id);
+      ${isMine?`<button class="delmine" data-del="${sid}">删除我的菜谱</button>`:""}
+    </div>`;
+  }).join("");
+  $("#recipeGrid").querySelectorAll(".star[data-id]").forEach(b=>b.onclick=()=>{
+    const sid=b.dataset.id;
+    if(fav.includes(sid)) fav=fav.filter(x=>x!==sid); else fav.push(sid);
     localStorage.setItem("recipes_fav",JSON.stringify(fav)); renderRecipes(); renderFav();
+  });
+  $("#recipeGrid").querySelectorAll(".delmine").forEach(b=>b.onclick=()=>{
+    const sid=b.dataset.del;
+    custom=custom.filter(x=>String(x.id)!==sid);
+    localStorage.setItem("recipes_custom",JSON.stringify(custom));
+    fav=fav.filter(x=>x!==sid); localStorage.setItem("recipes_fav",JSON.stringify(fav));
+    renderRecipes(); renderFav();
   });
 }
 function renderShop(){
@@ -213,19 +250,19 @@ function renderShop(){
 }
 function renderFav(){
   if(!fav.length){$("#favList").innerHTML='<div class="empty">还没收藏，去菜谱库点 ☆</div>';return;}
-  const map=Object.fromEntries(DATA.recipes.map(r=>[r.id,r]));
+  const map=Object.fromEntries(allRecipes().map(r=>[String(r.id),r]));
   $("#favList").innerHTML=fav.filter(id=>map[id]).map(id=>{
     const r=map[id];
-    return `<div class="fav-item"><span>⭐ ${r.name} <small style="color:var(--muted)">${r.cuisine}·${r.category}</small></span><button class="x" data-id="${id}">取消</button></div>`;
+    return `<div class="fav-item"><span>⭐ ${r.name} <small style="color:var(--muted)">${(r.cuisine||"自制")}·${r.category}</small></span><button class="x" data-id="${id}">取消</button></div>`;
   }).join("");
-  $("#favList").querySelectorAll(".x").forEach(b=>b.onclick=()=>{fav=fav.filter(x=>+x!==+b.dataset.id);localStorage.setItem("recipes_fav",JSON.stringify(fav));renderFav();renderRecipes();});
+  $("#favList").querySelectorAll(".x").forEach(b=>b.onclick=()=>{fav=fav.filter(x=>x!==b.dataset.id);localStorage.setItem("recipes_fav",JSON.stringify(fav));renderFav();renderRecipes();});
 }
 async function refreshMod(mod){
   const btn=document.querySelector(`.refresh[data-mod="${mod}"]`);
   if(btn&&mod!=="all"){btn.classList.add("spin");btn.disabled=true;}
   const allBtn=document.querySelector('.refresh[data-mod="all"]'); if(mod==="all"&&allBtn){allBtn.classList.add("spin");allBtn.disabled=true;}
   try{
-    if(mod==="all"||mod==="recipes"){await fetchData();renderFilters();renderRecipes();renderFav();}
+    if(mod==="all"||mod==="recipes"||mod==="custom"){await fetchData();renderFilters();renderRecipes();renderFav();}
     if(mod==="all"||mod==="weather"||mod==="today"){WEATHER=await fetchWeatherLive();renderWeather();if(mod==="all"||mod==="today")renderToday();}
     if(mod==="all"||mod==="shop") renderShop();
     if(mod==="all"||mod==="fav") renderFav();
@@ -239,6 +276,18 @@ document.querySelectorAll(".refresh").forEach(b=>b.onclick=()=>refreshMod(b.data
 $("#search").oninput=renderRecipes;
 $("#shopAdd").onclick=()=>{const v=$("#shopInput").value.trim();if(!v)return;shop.push({name:v,done:false});localStorage.setItem("recipes_shopping",JSON.stringify(shop));$("#shopInput").value="";renderShop();};
 $("#shopInput").onkeydown=e=>{if(e.key==="Enter")$("#shopAdd").click();};
+$("#cAdd").onclick=()=>{
+  const name=$("#cName").value.trim();
+  if(!name){alert("先填菜名");return;}
+  const ing=$("#cIng").value.split(/[，,]/).map(s=>s.trim()).filter(Boolean);
+  const steps=$("#cSteps").value.split(/\n/).map(s=>s.trim()).filter(Boolean);
+  const tags=$("#cTag").value.split(/[，,]/).map(s=>s.trim()).filter(Boolean);
+  const url=$("#cUrl").value.trim();
+  custom.push({id:"c_"+Date.now(),name,category:$("#cCat").value,cuisine:"自制",time:+$("#cTime").value||0,difficulty:$("#cDiff").value||"简单",servings:0,ingredients:ing,steps,tags,url,why:"我添加的私房菜"});
+  localStorage.setItem("recipes_custom",JSON.stringify(custom));
+  $("#cName").value="";$("#cIng").value="";$("#cSteps").value="";$("#cTag").value="";$("#cUrl").value="";$("#cTime").value="";
+  renderFilters();renderRecipes();
+};
 // 启动
 (async function load(){
   try{await fetchData();}catch(e){$("#upd").textContent="数据加载失败";}
