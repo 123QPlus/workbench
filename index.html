@@ -41,11 +41,18 @@
   .meta{font-size:13px;opacity:.95;text-align:right}
   .meta b{font-weight:600}
   main{max-width:1180px;margin:-18px auto 40px;padding:0 16px;display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .row3{display:contents}
   .card{grid-column:span 6;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
   .card.span12{grid-column:span 12}
   .card.span4{grid-column:span 4}
-  .card h2{margin:0;padding:14px 18px;font-size:16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line);background:var(--green-50)}
+  .card h2{margin:0;padding:14px 18px;font-size:16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:var(--green-50)}
+  .card h2 .h-t{display:flex;align-items:center;gap:8px}
   .card h2 .dot{width:9px;height:9px;border-radius:50%;background:var(--green-600)}
+  .refresh{border:0;background:transparent;cursor:pointer;font-size:17px;color:var(--green-700);padding:2px 6px;border-radius:8px;line-height:1}
+  .refresh:hover{background:var(--green-100)}
+  .refresh:disabled{opacity:.5;cursor:default}
+  .refresh.spin{animation:spin .6s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
   .card .body{padding:14px 18px 18px;flex:1}
   .note{font-size:12px;color:var(--muted);padding:0 18px 14px}
 
@@ -121,7 +128,11 @@
   .tk-tip{font-size:12px;color:var(--muted);padding:10px 18px 16px}
 
   @media(max-width:860px){
-    .card,.card.span4,.card.span12{grid-column:span 12}
+    main{display:block}
+    .row3{display:flex;gap:12px;overflow-x:auto;padding:0 2px 10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+    .row3 .card{flex:0 0 82vw;max-width:360px;scroll-snap-align:start;margin:0}
+    .row3 .card .body{max-height:62vh;overflow-y:auto}
+    .card.span12{width:auto}
     .tk-form,.tk-row{grid-template-columns:1fr 1fr;font-size:12px}
     .tk-form button{grid-column:span 2}
   }
@@ -145,34 +156,36 @@
 </header>
 
 <main>
-  <!-- 新闻 -->
-  <section class="card span4">
-    <h2><span class="dot"></span>每日新闻速看</h2>
-    <div class="tabs" id="newsTabs">
-      <span class="tab active" data-cat="全部">全部</span>
-      <span class="tab" data-cat="AI">AI</span>
-      <span class="tab" data-cat="政治">政治</span>
-      <span class="tab" data-cat="重大">重大</span>
-    </div>
-    <div class="body" id="newsList"></div>
-  </section>
+  <div class="row3">
+    <!-- 新闻 -->
+    <section class="card span4">
+      <h2><span class="h-t"><span class="dot"></span>每日新闻速看</span><button class="refresh" data-mod="news" title="刷新本模块" aria-label="刷新">↻</button></h2>
+      <div class="tabs" id="newsTabs">
+        <span class="tab active" data-cat="全部">全部</span>
+        <span class="tab" data-cat="AI">AI</span>
+        <span class="tab" data-cat="政治">政治</span>
+        <span class="tab" data-cat="重大">重大</span>
+      </div>
+      <div class="body" id="newsList"></div>
+    </section>
 
-  <!-- 天气 -->
-  <section class="card span4">
-    <h2><span class="dot"></span>厦门天气 · 通勤</h2>
-    <div class="body" id="wxBody"></div>
-    <div class="note">数据：Open-Meteo 实时天气 · 穿搭与出行建议根据当日天气自动生成</div>
-  </section>
+    <!-- 天气 -->
+    <section class="card span4">
+      <h2><span class="h-t"><span class="dot"></span>厦门天气 · 通勤</span><button class="refresh" data-mod="weather" title="刷新本模块" aria-label="刷新">↻</button></h2>
+      <div class="body" id="wxBody"></div>
+      <div class="note">数据：Open-Meteo 实时天气 · 穿搭与出行建议根据当日天气自动生成</div>
+    </section>
 
-  <!-- 学习 -->
-  <section class="card span4">
-    <h2><span class="dot"></span>今日推荐学习项目</h2>
-    <div class="body learn" id="learnBody"></div>
-  </section>
+    <!-- 学习 -->
+    <section class="card span4">
+      <h2><span class="h-t"><span class="dot"></span>今日推荐学习项目</span><button class="refresh" data-mod="learning" title="刷新本模块" aria-label="刷新">↻</button></h2>
+      <div class="body learn" id="learnBody"></div>
+    </section>
+  </div>
 
   <!-- 岗位 -->
   <section class="card span12">
-    <h2><span class="dot"></span>岗位热线 · 每日可投递</h2>
+    <h2><span class="h-t"><span class="dot"></span>岗位热线 · 每日可投递</span><button class="refresh" data-mod="jobs" title="刷新本模块" aria-label="刷新">↻</button></h2>
     <div class="filters" id="jobFilters">
       <span class="tab active" data-ch="全部">全部</span>
       <span class="tab" data-ch="厦门人才网">厦门人才网</span>
@@ -186,7 +199,7 @@
 
   <!-- 投递追踪 -->
   <section class="card span12">
-    <h2><span class="dot"></span>投递进度追踪</h2>
+    <h2><span class="h-t"><span class="dot"></span>投递进度追踪</span><button class="refresh" data-mod="tracker" title="刷新本模块" aria-label="刷新">↻</button></h2>
     <div class="tk-form" id="tkForm">
       <input id="f-co" placeholder="公司" />
       <input id="f-role" placeholder="岗位" />
@@ -245,36 +258,36 @@ function wxTravel(code, temp){
   else tip="天气平稳，正常通勤即可，保持好心情 ☀️";
   return tip;
 }
+
 const pad = n => String(n).padStart(2,"0");
 const fmtDate = iso => { const d=new Date(iso); return `${d.getMonth()+1}月${d.getDate()}日`; };
+const todayStart = () => { const d=new Date(); d.setHours(0,0,0,0); return d; };
 
-async function load(){
-  let data;
-  try{ data = await (await fetch("data.json")).json(); }
-  catch(e){ document.getElementById("newsList").innerHTML="<p style='color:#d9534f'>数据加载失败，请通过云端链接或本地服务器打开。</p>"; return; }
-  document.getElementById("upd").textContent = fmtDate(data.updated_at)+" "+new Date(data.updated_at).toTimeString().slice(0,5);
+let DATA = null;
+async function fetchData(){
+  const res = await fetch("data.json?_=" + Date.now());
+  DATA = await res.json();
+  return DATA;
+}
 
-  // News
-  const newsList = document.getElementById("newsList");
-  const renderNews = cat => {
-    const items = data.news.filter(n=>cat==="全部"||n.category===cat);
-    newsList.innerHTML = items.map(n=>`
-      <div class="news-item">
-        <span class="cat ${n.category}">${n.category}</span>
-        <a href="${n.url||"#"}" target="_blank" rel="noopener">${n.title}</a>
-        <div class="sum">${n.summary}</div>
-        ${n.points?`<ul class="pts">${n.points.map(p=>`<li><span class="k">·</span>${p}</li>`).join("")}</ul>`:""}
-        <div class="src">来源：${n.source}</div>
-      </div>`).join("") || "<p class='src'>暂无该分类新闻</p>";
-  };
-  renderNews("全部");
-  document.querySelectorAll("#newsTabs .tab").forEach(t=>t.onclick=()=>{
-    document.querySelectorAll("#newsTabs .tab").forEach(x=>x.classList.remove("active"));
-    t.classList.add("active"); renderNews(t.dataset.cat);
-  });
+// News
+let newsCat = "全部";
+function renderNews(){
+  const list = document.getElementById("newsList");
+  const items = DATA.news.filter(n=>newsCat==="全部"||n.category===newsCat);
+  list.innerHTML = items.map(n=>`
+    <div class="news-item">
+      <span class="cat ${n.category}">${n.category}</span>
+      <a href="${n.url||"#"}" target="_blank" rel="noopener">${n.title}</a>
+      <div class="sum">${n.summary}</div>
+      ${n.points?`<ul class="pts">${n.points.map(p=>`<li><span class="k">·</span>${p}</li>`).join("")}</ul>`:""}
+      <div class="src">来源：${n.source}</div>
+    </div>`).join("") || "<p class='src'>暂无该分类新闻</p>";
+}
 
-  // Weather
-  const w = data.weather, c = w.current;
+// Weather
+function renderWeather(){
+  const w = DATA.weather, c = w.current;
   document.getElementById("wxBody").innerHTML = `
     <div class="wx-now">
       <div class="wx-temp">${c.temperature}°</div>
@@ -290,9 +303,11 @@ async function load(){
       <div class="wx-advice-item"><b>👕 穿搭建议</b><div class="v">${wxClothing(c.weather_code, c.temperature)}</div></div>
       <div class="wx-advice-item"><b>🧭 出行攻略</b><div class="v">${wxTravel(c.weather_code, c.temperature)}</div></div>
     </div>`;
+}
 
-  // Learning
-  const L = data.learning;
+// Learning
+function renderLearning(){
+  const L = DATA.learning;
   document.getElementById("learnBody").innerHTML = `
     <div class="level">难度：${L.level}</div>
     <h3>${L.title}</h3>
@@ -302,63 +317,67 @@ async function load(){
     <div class="why"><b>产出：</b>${L.deliverable}</div>
     <div style="font-size:13px;color:var(--muted);margin-top:6px"><b>备选练手：</b></div>
     <ul>${L.alternatives.map(a=>`<li>${a}</li>`).join("")}</ul>`;
-
-  // Jobs
-  const jobList = document.getElementById("jobList");
-  const renderJobs = ch => {
-    let items = data.jobs;
-    if(ch==="高匹配") items = items.filter(j=>j.match==="高");
-    else if(ch!=="全部") items = items.filter(j=>j.channel===ch);
-    jobList.innerHTML = items.map(j=>`
-      <div class="job">
-        <div class="row1">
-          <div>
-            <h3>${j.title}</h3>
-            <div class="co">${j.company}</div>
-          </div>
-          <div style="text-align:right">
-            <span class="badge b-nature">${j.nature}</span>
-            <span class="badge b-type">${j.type}</span><br/>
-            <span class="match ${j.match}">匹配：${j.match}</span>
-          </div>
-        </div>
-        <div class="info">
-          <span>📍 ${j.location}</span><span>💰 ${j.salary}</span>
-          <span>🎓 ${j.education}</span><span>🔗 ${j.channel}</span>
-        </div>
-        <div class="why">${j.why}</div>
-        <a class="apply" href="${j.url}" target="_blank" rel="noopener">查看 / 投递 →</a>
-      </div>`).join("") || "<p class='src'>该渠道暂无匹配岗位</p>";
-  };
-  renderJobs("全部");
-  document.querySelectorAll("#jobFilters .tab").forEach(t=>t.onclick=()=>{
-    document.querySelectorAll("#jobFilters .tab").forEach(x=>x.classList.remove("active"));
-    t.classList.add("active"); renderJobs(t.dataset.ch);
-  });
-
-  initTracker();
 }
 
-/* 投递进度追踪：localStorage */
+// Jobs（自动屏蔽过期岗：招聘日期早于今日不显示）
+let jobCh = "全部";
+function visibleJobs(){
+  const t = todayStart();
+  return DATA.jobs.filter(j=>{
+    if(!j.date) return true;
+    return new Date(j.date + "T00:00:00") >= t;
+  });
+}
+function renderJobs(){
+  const list = document.getElementById("jobList");
+  let items = visibleJobs();
+  if(jobCh==="高匹配") items = items.filter(j=>j.match==="高");
+  else if(jobCh!=="全部") items = items.filter(j=>j.channel===jobCh);
+  const expired = DATA.jobs.length - visibleJobs().length;
+  const note = expired>0 ? `<p class="src" style="padding:0 0 10px">已自动隐藏 ${expired} 个过期岗位（招聘日期早于今日）</p>` : "";
+  list.innerHTML = note + (items.map(j=>`
+    <div class="job">
+      <div class="row1">
+        <div>
+          <h3>${j.title}</h3>
+          <div class="co">${j.company}</div>
+        </div>
+        <div style="text-align:right">
+          <span class="badge b-nature">${j.nature}</span>
+          <span class="badge b-type">${j.type}</span><br/>
+          <span class="match ${j.match}">匹配：${j.match}</span>
+        </div>
+      </div>
+      <div class="info">
+        <span>📍 ${j.location}</span><span>💰 ${j.salary}</span>
+        <span>🎓 ${j.education}</span><span>🔗 ${j.channel}</span>
+        <span>📅 截止 ${j.date||"长期"}</span>
+      </div>
+      <div class="why">${j.why}</div>
+      <a class="apply" href="${j.url}" target="_blank" rel="noopener">查看 / 投递 →</a>
+    </div>`).join("") || "<p class='src'>该渠道暂无匹配岗位</p>");
+}
+
+// Tracker（localStorage）
 const TK_KEY = "yq_workbench_tracker_v1";
-function initTracker(){
+function renderTracker(){
   const list = document.getElementById("tkList");
-  const render = ()=>{
-    let arr = JSON.parse(localStorage.getItem(TK_KEY)||"[]");
-    if(!arr.length){ list.innerHTML = `<div class="tk-empty">还没有记录，投出第一份简历就点上「添加」吧 🌱</div>`; return; }
-    list.innerHTML = arr.map((r,i)=>`
-      <div class="tk-row">
-        <div><b>${r.co}</b><br/><span style="color:#5d7065">${r.role}</span></div>
-        <div>${r.date||"—"}</div>
-        <div><span class="st ${r.st}">${r.st}</span></div>
-        <div colspan="2" style="grid-column:span 2">${r.note||""}</div>
-        <button class="del" data-i="${i}">删除</button>
-      </div>`).join("");
-    list.querySelectorAll(".del").forEach(b=>b.onclick=()=>{
-      let a = JSON.parse(localStorage.getItem(TK_KEY)||"[]"); a.splice(+b.dataset.i,1);
-      localStorage.setItem(TK_KEY, JSON.stringify(a)); render();
-    });
-  };
+  let arr = JSON.parse(localStorage.getItem(TK_KEY)||"[]");
+  if(!arr.length){ list.innerHTML = `<div class="tk-empty">还没有记录，投出第一份简历就点上「添加」吧 🌱</div>`; return; }
+  list.innerHTML = arr.map((r,i)=>`
+    <div class="tk-row">
+      <div><b>${r.co}</b><br/><span style="color:#5d7065">${r.role}</span></div>
+      <div>${r.date||"—"}</div>
+      <div><span class="st ${r.st}">${r.st}</span></div>
+      <div colspan="2" style="grid-column:span 2">${r.note||""}</div>
+      <button class="del" data-i="${i}">删除</button>
+    </div>`).join("");
+  list.querySelectorAll(".del").forEach(b=>b.onclick=()=>{
+    let a = JSON.parse(localStorage.getItem(TK_KEY)||"[]"); a.splice(+b.dataset.i,1);
+    localStorage.setItem(TK_KEY, JSON.stringify(a)); renderTracker();
+  });
+}
+function initTracker(){
   document.getElementById("f-add").onclick = ()=>{
     const co=document.getElementById("f-co").value.trim();
     const role=document.getElementById("f-role").value.trim();
@@ -367,9 +386,53 @@ function initTracker(){
     a.unshift({co,role,date:document.getElementById("f-date").value,st:document.getElementById("f-st").value,note:document.getElementById("f-note").value.trim()});
     localStorage.setItem(TK_KEY, JSON.stringify(a));
     document.getElementById("f-co").value=document.getElementById("f-role").value=document.getElementById("f-note").value="";
-    render();
+    renderTracker();
   };
-  render();
+}
+
+// 单模块刷新
+async function refreshMod(mod){
+  const btn = document.querySelector(`.refresh[data-mod="${mod}"]`);
+  if(btn){ btn.classList.add("spin"); btn.disabled = true; }
+  try{
+    if(mod!=="tracker"){ await fetchData(); }
+    if(mod==="news") renderNews();
+    else if(mod==="weather") renderWeather();
+    else if(mod==="learning") renderLearning();
+    else if(mod==="jobs") renderJobs();
+    else if(mod==="tracker") renderTracker();
+    if(mod!=="tracker"){
+      document.getElementById("upd").textContent = fmtDate(DATA.updated_at)+" "+new Date(DATA.updated_at).toTimeString().slice(0,5);
+    }
+  } finally {
+    if(btn){ btn.classList.remove("spin"); btn.disabled = false; }
+  }
+}
+
+async function load(){
+  try{ await fetchData(); }
+  catch(e){ document.getElementById("newsList").innerHTML="<p style='color:#d9534f'>数据加载失败，请通过云端链接或本地服务器打开。</p>"; return; }
+  document.getElementById("upd").textContent = fmtDate(DATA.updated_at)+" "+new Date(DATA.updated_at).toTimeString().slice(0,5);
+
+  renderNews();
+  document.querySelectorAll("#newsTabs .tab").forEach(t=>t.onclick=()=>{
+    document.querySelectorAll("#newsTabs .tab").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active"); newsCat=t.dataset.cat; renderNews();
+  });
+
+  renderWeather();
+  renderLearning();
+
+  renderJobs();
+  document.querySelectorAll("#jobFilters .tab").forEach(t=>t.onclick=()=>{
+    document.querySelectorAll("#jobFilters .tab").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active"); jobCh=t.dataset.ch; renderJobs();
+  });
+
+  initTracker();
+  renderTracker();
+
+  document.querySelectorAll(".refresh").forEach(b=>{ b.onclick=()=>refreshMod(b.dataset.mod); });
 }
 
 load();

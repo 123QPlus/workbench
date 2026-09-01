@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-01T15:15:00+08:00",
+  "updated_at": "2026-09-01T15:33:00+08:00",
   "owner": "阙雨清",
   "news": [
     {
@@ -121,6 +121,7 @@
       "salary": "6k-8k/月",
       "education": "本科及以上",
       "type": "社招",
+      "date": "2026-09-30",
       "match": "高",
       "why": "应用统计专业对口；要求 SQL + Python + Excel 数据清洗/报表，与你的技能栈高度吻合；派驻国企，双休。",
       "url": "https://www.xmrc.com.cn/Recruit/RecruitInfo/?id=9fe486d678ac4b4a9c7ae131cb3fc61f"
@@ -134,6 +135,7 @@
       "salary": "8k-10k·14薪",
       "education": "硕士应届",
       "type": "校招",
+      "date": "2026-10-20",
       "match": "中",
       "why": "统计/大数据相关专业，结合 AI 算法做市政数据挖掘；薪资优秀但要求硕士，可作为冲一冲目标。",
       "url": "https://www.xmrc.com.cn/Recruit/RecruitInfo/0d6e995c2b8d4ad4be8483714bcc80b1"
@@ -147,6 +149,7 @@
       "salary": "6k-8k/月",
       "education": "本科（2025-2026届）",
       "type": "校招",
+      "date": "2026-10-15",
       "match": "高",
       "why": "明确要求 Python/BI/Excel 运营数据分析；应届可投，岗位与你的背景契合，建议优先投递。",
       "url": "https://www.quanzhi.com/job/68dca2b47f2732863fe761db"
@@ -160,6 +163,7 @@
       "salary": "面议",
       "education": "2027届本科",
       "type": "校招",
+      "date": "2026-11-30",
       "match": "高",
       "why": "2027届可投，数学/统计/精算优先，要求基础 SQL/Python；管培生定岗数据类岗位，成长空间大。",
       "url": "https://campus.pingan.com/positionDetail?positionId=cebdb08d1dc8306c9d9c626ede9f52ec"
@@ -173,6 +177,7 @@
       "salary": "面议",
       "education": "本科（统计/数学/数据分析优先）",
       "type": "校招",
+      "date": "2026-10-31",
       "match": "高",
       "why": "中管金融央企，综合方向明确含“业务数据统计、分析、过程监控”；专业对口，稳定性强。",
       "url": "https://www.xmrc.com.cn/Recruit/RecruitInfo/155e4463d8844ee4995912a8b09541c0"
@@ -186,6 +191,7 @@
       "salary": "面议",
       "education": "2027届本科（统计/数学/STEM优先）",
       "type": "校招",
+      "date": "2026-10-10",
       "match": "中",
       "why": "岗位含“数据分析（业务）/金融科技”，统计类优先；简历投递截止 10 月 10 日，建议尽早网申。",
       "url": "http://career.cmbchina.com"
@@ -199,6 +205,7 @@
       "salary": "面议",
       "education": "本科（统计/金融工程/计算机优先）",
       "type": "校招",
+      "date": "2026-11-15",
       "match": "高",
       "why": "要求 Python/SQL 做大宗商品基本面量化与 AI 策略回测，统计背景契合，AI+数据方向前沿。",
       "url": "https://career.nankai.edu.cn/correcruit/content/id/117204.html"
@@ -212,6 +219,7 @@
       "salary": "16k-26k·15薪",
       "education": "本科 5年+",
       "type": "社招",
+      "date": "2026-12-31",
       "match": "低",
       "why": "薪资亮眼但要求 5 年以上经验、熟悉 SQL/Python/SPSS/Tableau；可作为了解市场薪资上限的参照，暂不匹配应届。",
       "url": "https://m.liepin.com/job/1968482515.shtml"
