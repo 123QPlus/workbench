@@ -1,4 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#e8743b"/>
-  <text x="256" y="340" font-size="280" text-anchor="middle" fill="#fff" font-family="sans-serif">🍲</text>
+  <rect width="512" height="512" rx="110" fill="#ef8fb0"/>
+  <g fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M150 175 Q120 95 200 135"/>
+    <path d="M362 175 Q392 95 312 135"/>
+    <circle cx="256" cy="270" r="120"/>
+    <ellipse cx="256" cy="300" rx="52" ry="38"/>
+    <path d="M244 300 h-12 M280 300 h12"/>
+    <circle cx="216" cy="244" r="10" fill="#fff" stroke="none"/>
+    <circle cx="296" cy="244" r="10" fill="#fff" stroke="none"/>
+    <path d="M216 332 Q256 366 296 332"/>
+  </g>
 </svg>

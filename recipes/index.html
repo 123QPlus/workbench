@@ -5,14 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>奕静QQ家庭菜谱</title>
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#e8743b">
+<meta name="theme-color" content="#ef8fb0">
 <style>
   :root{
-    --bg:#fff8f3; --card:#ffffff; --line:#f0e2d8; --text:#3a2e28; --muted:#9a8a80;
-    --primary:#e8743b; --primary-d:#cf5f29; --soft:#fdeee4; --green:#5aa66f; --chip:#f6e7db;
+    --bg:#fdf3f7; --card:#ffffff; --line:#f6dde6; --text:#4a3b42; --muted:#a98a96;
+    --primary:#ef8fb0; --primary-d:#d76a92; --soft:#fdeaf1; --green:#7bbf9a; --chip:#fbe4ee;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.5;padding:14px;max-width:1100px;margin:0 auto}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.5;padding:14px;max-width:1100px;margin:0 auto;position:relative}
+  /* 猪猪简笔画背景装饰 */
+  .piggy-deco{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;color:#f3b6c8}
+  .piggy-deco .pig{position:absolute;opacity:.5}
+  @media(max-width:760px){.piggy-deco .pig{opacity:.32}}
   header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px}
   header h1{font-size:22px;color:var(--primary)}
   .meta{font-size:12px;color:var(--muted)}
@@ -27,7 +31,7 @@
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:760px){.row2{grid-template-columns:1fr}.rscroll{overflow-x:auto;scroll-snap-type:x mandatory}.rscroll>*{scroll-snap-align:start;min-width:80%}}
   /* 今日推荐 */
-  .today-hero{background:linear-gradient(135deg,var(--primary),#f0975e);color:#fff;border-radius:12px;padding:16px;margin-bottom:10px}
+  .today-hero{background:linear-gradient(135deg,var(--primary),#f6b3c9);color:#fff;border-radius:12px;padding:16px;margin-bottom:10px}
   .today-hero .t{font-size:20px;font-weight:700}
   .today-hero .sub{font-size:13px;opacity:.92;margin-top:4px}
   .today-hero .tags{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
@@ -75,6 +79,14 @@
 </style>
 </head>
 <body>
+<div class="piggy-deco" aria-hidden="true">
+  <svg class="pig" style="top:5%;left:1.5%;width:96px;transform:rotate(-12deg)" viewBox="0 0 100 100"><path d="M27 34 Q20 14 39 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M73 34 Q80 14 61 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="54" r="27" fill="none" stroke="currentColor" stroke-width="3.5"/><ellipse cx="50" cy="61" rx="12" ry="9" fill="none" stroke="currentColor" stroke-width="3.5"/><circle cx="46" cy="61" r="1.7" fill="currentColor"/><circle cx="54" cy="61" r="1.7" fill="currentColor"/><circle cx="41" cy="48" r="2.2" fill="currentColor"/><circle cx="59" cy="48" r="2.2" fill="currentColor"/><path d="M42 71 Q50 77 58 71" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+  <svg class="pig" style="top:11%;right:4%;width:72px;transform:rotate(16deg)" viewBox="0 0 100 100"><path d="M27 34 Q20 14 39 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M73 34 Q80 14 61 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="54" r="27" fill="none" stroke="currentColor" stroke-width="3.5"/><ellipse cx="50" cy="61" rx="12" ry="9" fill="none" stroke="currentColor" stroke-width="3.5"/><circle cx="46" cy="61" r="1.7" fill="currentColor"/><circle cx="54" cy="61" r="1.7" fill="currentColor"/><circle cx="41" cy="48" r="2.2" fill="currentColor"/><circle cx="59" cy="48" r="2.2" fill="currentColor"/><path d="M42 71 Q50 77 58 71" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+  <svg class="pig" style="bottom:7%;left:4%;width:88px;transform:rotate(9deg)" viewBox="0 0 100 100"><path d="M27 34 Q20 14 39 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M73 34 Q80 14 61 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="54" r="27" fill="none" stroke="currentColor" stroke-width="3.5"/><ellipse cx="50" cy="61" rx="12" ry="9" fill="none" stroke="currentColor" stroke-width="3.5"/><circle cx="46" cy="61" r="1.7" fill="currentColor"/><circle cx="54" cy="61" r="1.7" fill="currentColor"/><circle cx="41" cy="48" r="2.2" fill="currentColor"/><circle cx="59" cy="48" r="2.2" fill="currentColor"/><path d="M42 71 Q50 77 58 71" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+  <svg class="pig" style="bottom:13%;right:3%;width:100px;transform:rotate(-10deg)" viewBox="0 0 100 100"><path d="M27 34 Q20 14 39 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M73 34 Q80 14 61 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="54" r="27" fill="none" stroke="currentColor" stroke-width="3.5"/><ellipse cx="50" cy="61" rx="12" ry="9" fill="none" stroke="currentColor" stroke-width="3.5"/><circle cx="46" cy="61" r="1.7" fill="currentColor"/><circle cx="54" cy="61" r="1.7" fill="currentColor"/><circle cx="41" cy="48" r="2.2" fill="currentColor"/><circle cx="59" cy="48" r="2.2" fill="currentColor"/><path d="M42 71 Q50 77 58 71" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+  <svg class="pig" style="top:46%;left:0.5%;width:58px;transform:rotate(22deg)" viewBox="0 0 100 100"><path d="M27 34 Q20 14 39 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M73 34 Q80 14 61 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="54" r="27" fill="none" stroke="currentColor" stroke-width="3.5"/><ellipse cx="50" cy="61" rx="12" ry="9" fill="none" stroke="currentColor" stroke-width="3.5"/><circle cx="46" cy="61" r="1.7" fill="currentColor"/><circle cx="54" cy="61" r="1.7" fill="currentColor"/><circle cx="41" cy="48" r="2.2" fill="currentColor"/><circle cx="59" cy="48" r="2.2" fill="currentColor"/><path d="M42 71 Q50 77 58 71" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+  <svg class="pig" style="top:52%;right:1.5%;width:64px;transform:rotate(-18deg)" viewBox="0 0 100 100"><path d="M27 34 Q20 14 39 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M73 34 Q80 14 61 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="54" r="27" fill="none" stroke="currentColor" stroke-width="3.5"/><ellipse cx="50" cy="61" rx="12" ry="9" fill="none" stroke="currentColor" stroke-width="3.5"/><circle cx="46" cy="61" r="1.7" fill="currentColor"/><circle cx="54" cy="61" r="1.7" fill="currentColor"/><circle cx="41" cy="48" r="2.2" fill="currentColor"/><circle cx="59" cy="48" r="2.2" fill="currentColor"/><path d="M42 71 Q50 77 58 71" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+</div>
 <header>
   <div>
     <h1>奕静QQ家庭菜谱</h1>
@@ -214,7 +226,7 @@ function renderRecipes(){
     const sid=String(r.id);
     const isMine=sid.startsWith("c_");
     const xhs=r.url?`<a class="badge xhs" href="${r.url}" target="_blank" rel="noopener">📺 小红书教程</a>`:"";
-    const mine=isMine?`<span class="badge" style="background:#ffe3c2;color:#b5651d">我的</span>`:"";
+    const mine=isMine?`<span class="badge" style="background:#ffd9e6;color:#c25a82">我的</span>`:"";
     return `<div class="rc">
       <button class="star${fav.includes(sid)?" on":""}" data-id="${sid}">${fav.includes(sid)?"★":"☆"}</button>
       <h3>${r.name}</h3>
