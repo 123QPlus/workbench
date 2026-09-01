@@ -240,6 +240,7 @@ function pickToday(w){
 }
 function renderToday(){
   const r=pickToday(WEATHER);
+  if(!r){ $("#todayBody").innerHTML='<div class="empty">还没有菜谱，去「➕ 自定义菜谱」添加你的第一道菜吧 🍳</div>'; return; }
   $("#todayBody").innerHTML=`
     <div class="today-hero">
       <div class="t">${r.name}</div>
