@@ -1,66 +1,66 @@
 {
-  "updated_at": "2026-09-01T23:55:28+08:00",
+  "updated_at": "2026-09-02T13:40:00+08:00",
   "owner": "阙雨清",
   "news": [
     {
       "category": "AI",
       "title": "科大讯飞 9 月 1 日开源星火 X2.5 端侧模型，9 月 7 日发 293B 基座",
-      "summary": "科大讯飞于 9 月 1 日开源星火 X2.5-4B 与 X2.5-1.7B 两款端侧通用大模型，原生支持最长 1M token 上下文，9 月 7 日还将发布 293B 基座模型。",
+      "summary": "科大讯飞子公司词元星火于 9 月 1 日开源星火 X2.5-4B 与 1.7B 两款端侧通用大模型，原生支持最长 100 万 Token 上下文，9 月 7 日还将发布 293B 旗舰基座。",
       "points": [
-        "开源内容：9 月 1 日开源星火 X2.5-4B 与 1.7B 端侧模型，原生支持最长 1M token 上下文窗口",
-        "场景：面向车载、智能硬件、万物互联等端侧场景，强化智能体、数学与通用理解能力",
-        "路线图：9 月 7 日发星火 X2.5(293B)基座模型，进一步升级代码与智能体核心能力"
+        "开源内容：9 月 1 日开源星火 X2.5-4B 与 1.7B 端侧模型，原生支持最长 100 万 Token 上下文窗口",
+        "场景：面向车载、智能硬件、万物互联等端侧场景，智能家居控制端到端正确率 90.3%，平均响应 0.85 秒",
+        "路线图：9 月 7 日发星火 X2.5（293B）基座模型，进一步升级代码与智能体核心能力"
       ],
-      "source": "证券时报 / 时代周报",
-      "url": "https://www.toutiao.com/article/7680031729423270440/"
+      "source": "上游新闻 / 腾讯研究院",
+      "url": "http://view.inews.qq.com/a/20260902A00FOE00"
     },
     {
       "category": "AI",
-      "title": "美团 9 月 1 日开源 LongCat-Flash MoE 大模型：5600 亿参数、推理超 100 token/s",
-      "summary": "美团发布并开源 LongCat-Flash 专家混合模型，含 5600 亿参数，按上下文激活约 270 亿，推理速度超每秒 100 个 token，综合性能比肩 DeepSeek-V3.1。",
+      "title": "DeepSeek 开源 V4-Flash-Vision-Exp 多模态视觉模型（MIT 协议，305B）",
+      "summary": "8 月 31 日 DeepSeek 在 Hugging Face 开放 V4 系列首款原生支持图片输入的视觉模型权重，采用 MIT License，参数规模 305B、激活仅 13B，Agent 能力接近 Opus-4.8。",
       "points": [
-        "模型规模：5600 亿参数 MoE，按上下文激活 186–313 亿（均值约 270 亿）参数",
-        "性能：推理速度超 100 token/s，20 万亿 token 数据 30 天完成预训练，系统可用率 98.48%",
-        "定位：非思考型综合性能比肩 DeepSeek-V3.1、Kimi-K2，参数与推理开销更低"
+        "开源：8 月 31 日于 Hugging Face 开放 V4-Flash-Vision-Exp 权重，MIT License，可商用",
+        "规模：参数 305B、激活仅 13B，将多模态 Agent 推理成本压至接近纯文本水平",
+        "意义：V4 系列首款多模态模型，识图 + Agent 任务执行，标志多模态 Agent 竞争进入新阶段"
       ],
-      "source": "东方财富研报",
-      "url": "http://pdf.dfcfw.com/pdf/H3_AP202509071739961569_1.pdf"
+      "source": "每日经济新闻 / 腾讯网",
+      "url": "https://new.qq.com/rain/a/20260902A03R2E00"
     },
     {
       "category": "AI",
-      "title": "海外 AI 动态：DeepSeek 年底推更强 Agent 模型，Anthropic F 轮估值 1830 亿美元",
-      "summary": "据彭博社，DeepSeek 正开发具备更强 AI Agent 能力的新模型，预计今年第四季度推出；Anthropic 完成 130 亿美元 F 轮融资，投后估值达 1830 亿美元。",
+      "title": "Runway 发布首个界面世界模型 Solaris，可实时逐帧生成交互界面",
+      "summary": "Runway 推出首个界面世界模型 Solaris，App 与网页界面可像视频一样实时生成，用户点击、拖拽后模型直接生成下一帧，无需预先写代码，由语言模型推理、世界模型渲染。",
       "points": [
-        "DeepSeek：新模型仅需少量提示即可执行复杂操作，并能根据历史操作自我进化，年底推出",
-        "Anthropic：130 亿美元 F 轮，估值 1830 亿美元，成全球第三大 AI 独角兽（仅次于 OpenAI、字节）",
-        "信号：行业竞争从“模型能力”转向“自主 Agent + 商业规模化”"
+        "能力：基于 Gen-4.5 改造，逐帧自回归 + 少步蒸馏，720p 下实时交互，无需开发者预写代码",
+        "测试：人类对比中指令遵循偏好 61%、行为自然度 71%，高于传统代码方案",
+        "用途：为 Computer Use Agent 提供泛化训练环境，重新定义人机交互方式"
       ],
-      "source": "彭博社 / 东方财富研报",
-      "url": "http://pdf.dfcfw.com/pdf/H3_AP202509071739961569_1.pdf"
+      "source": "腾讯研究院 / 新浪",
+      "url": "https://k.sina.com.cn/article_7879849860_1d5acf78406801huoa.html"
     },
     {
       "category": "AI",
-      "title": "工信部启动人工智能应用服务商培育专项行动：首购首用、风险补偿加大采购",
-      "summary": "工信部印发通知组织开展 AI 应用服务商培育专项行动，到 2026 年底服务商资源池突破 2000 家，探索首购首用、风险补偿等模式加大大模型/智能体/Token 采购。",
+      "title": "腾讯混元开源 Hy4 量化轻量版：权重 1.5TB 压缩至 214GB",
+      "summary": "腾讯混元将 Hy4 preview 权重从接近 1.5TB 压缩到约 214GB，采用自研 Sherry 稀疏三值量化，大幅降低运行门槛；主流评测与 BF16 原版差距在一两分以内。",
       "points": [
-        "目标：2026 年底全国服务商资源池突破 2000 家，2027 年底不少于 3000 家",
-        "举措：建立服务商资源池，探索首购首用、风险补偿，加大大模型、智能体、Token 服务采购",
-        "对你：国企 / 政企 AI 数据岗需求或被拉动，关注相关招聘"
+        "压缩：自研 Sherry 稀疏三值量化，四个权重一组编码为 5 比特、平均 1.25 比特",
+        "效果：主流评测与 BF16 原版差距一两分以内、检索类基本不掉点",
+        "门槛：异构联合推理下可跑通，大幅降低本地部署硬件要求"
       ],
-      "source": "央视网 / 新华社",
-      "url": "https://news.cctv.com/2026/09/01/ARTIXMhzFSewkmIQ3LRj5WPx260901.shtml"
+      "source": "腾讯研究院",
+      "url": "https://www.sohu.com/a/1070665925_455313"
     },
     {
-      "category": "政治",
-      "title": "习近平主持上海合作组织成员国元首理事会第二十五次会议并发表重要讲话",
-      "summary": "9 月 1 日，国家主席习近平主持上海合作组织成员国元首理事会第二十五次会议，并出席“上海合作组织+”会议，会见多国领导人；第 17 期《求是》发表重要文章。",
+      "category": "AI",
+      "title": "OpenAI 宣布 11 月 12 日终止向 Cursor 提供模型服务，Anthropic 增援",
+      "summary": "OpenAI 于 8 月 30 日声明，因 SpaceX 违反合同前例，将于 11 月 12 日终止向编程工具 Cursor 提供模型，目前仅占其约 5% 流量；Anthropic 已表态增加算力支持 Claude 在 Cursor 部署。",
       "points": [
-        "峰会：主持上合组织成员国元首理事会第 25 次会议，出席“上海合作组织+”会议",
-        "双边：会见多国领导人，就经贸与安全等议题交换意见",
-        "理论：第 17 期《求是》发表习近平重要文章《坚持落实管党治党政治责任》"
+        "决定：OpenAI 称因 SpaceX 违反合同前例，11 月 12 日终止向 Cursor 提供模型",
+        "影响：Cursor 仅约 5% 流量来自 OpenAI，Anthropic 增援 Claude 算力部署",
+        "信号：编程 AI 格局生变，模型供应与工具绑定关系重构"
       ],
-      "source": "央视新闻 / 腾讯新闻",
-      "url": "https://news.qq.com/rain/a/20260901A02N8P00"
+      "source": "华尔街见闻 / 腾讯网",
+      "url": "https://new.qq.com/rain/a/20260902A02W0400"
     },
     {
       "category": "政治",
@@ -71,20 +71,32 @@
         "审计：以条例修订深化审计改革、压实整改责任、加强财政监督",
         "营商：完善政企沟通机制，主动帮助企业解决现实困难"
       ],
-      "source": "人民网",
-      "url": "https://cpc.people.com.cn/n1/2026/0901/c64094-40789964.html"
+      "source": "光明网 / 人民日报",
+      "url": "https://news.gmw.cn/2026-09/01/content_38977400.htm"
     },
     {
       "category": "政治",
-      "title": "七部门发文推动商品消费扩容升级，目标 2030 年社零 60 万亿元",
-      "summary": "商务部等 7 部门提出 20 项措施推动商品消费扩容升级，到 2030 年社会消费品零售总额达 60 万亿元左右，培育绿色、智能、健康等十万亿级市场。",
+      "title": "9 月新规施行：公积金提取拓宽、出境入境管理、未满 16 岁禁直播",
+      "summary": "9 月起一批新规落地：装修/物业费纳入公积金提取、出境入境管理新规施行、互联网分发机构不得为未满 16 周岁未成年人提供网络直播发布服务、微短剧不得使用算法诱导沉迷。",
       "points": [
-        "目标：2030 年社零总额约 60 万亿元",
-        "举措：20 项扩大内需、升级商品消费的具体政策",
-        "影响：消费 / 零售 / 电商数据类岗位需求有望抬升"
+        "公积金：装修自住住房、支付物业费可提取，房租提取取消收入比例门槛，贷款审查缩至 10 日",
+        "出入境：9 月 15 日起施行新规，健全出境安全风险防范、完善不准出境情形",
+        "网络：未满 16 岁禁直播发布；微短剧不得使用算法模型诱导用户沉迷、过度消费"
       ],
-      "source": "央视新闻 / 中国新闻网",
-      "url": "https://www.zj.chinanews.com/jzkzj/2026-09-01/detail-ihfivshq1301290.shtml"
+      "source": "腾讯新闻 / 苏州市政府",
+      "url": "https://news.qq.com/rain/a/20260901A04VOC00"
+    },
+    {
+      "category": "政治",
+      "title": "习近平主持上海合作组织成员国元首理事会第二十五次会议并发表重要讲话",
+      "summary": "9 月 1 日，国家主席习近平主持上合组织成员国元首理事会第 25 次会议，并出席“上海合作组织+”会议，会见多国领导人；第 17 期《求是》发表重要文章。",
+      "points": [
+        "峰会：主持上合组织成员国元首理事会第 25 次会议，出席“上海合作组织+”会议",
+        "双边：会见多国领导人，就经贸与安全等议题交换意见",
+        "理论：第 17 期《求是》发表习近平重要文章《坚持落实管党治党政治责任》"
+      ],
+      "source": "央视新闻 / 腾讯新闻",
+      "url": "https://news.qq.com/rain/a/20260901A02N8P00"
     },
     {
       "category": "重大",
@@ -100,43 +112,31 @@
     },
     {
       "category": "重大",
-      "title": "尼泊尔泥石流遇难升至 987 人，应急管理部抢通吉隆口岸剩余 800 米",
-      "summary": "截至 9 月 1 日晚，尼泊尔泥石流遇难人数升至 987 人；在尼灾区中方人员已全部安全转移安置，应急管理部调派中国安能全力抢通剩余路段。",
+      "title": "全球垂直 AI 开始拥抱中国开源大模型：Harvey 以 Kimi K3 为基座",
+      "summary": "估值 110 亿美元的法律 AI 独角兽 Harvey 发布法律专用模型 Tenet，未继续绑定 OpenAI/Anthropic，而是以中国开源模型 Kimi K3 为基座做行业后训练，标志垂直 AI 告别闭源 API 依赖。",
       "points": [
-        "灾情：尼泊尔泥石流遇难升至 987 人，搜救持续",
-        "中方人员：在尼灾区人员已全部安全转移安置",
-        "通路：中国安能抢通吉隆口岸剩余约 800 米，多方加紧搜寻失联者"
+        "事件：法律 AI 独角兽 Harvey 以中国开源模型 Kimi K3 为基座打造垂直模型 Tenet",
+        "动因：闭源 API 调用成本随规模指数上涨，且存在“供应商即竞争者”隐患",
+        "趋势：底层大模型与上层应用分工重构，开源基座成垂直行业重要技术底座"
       ],
-      "source": "中国新闻网",
-      "url": "https://www.zj.chinanews.com/jzkzj/2026-09-01/detail-ihfivshq1302029.shtml"
-    },
-    {
-      "category": "重大",
-      "title": "今起 59 项强制性国标 + 375 项推荐性国标实施，含家电/机器人/电商",
-      "summary": "9 月 1 日起，59 项强制性国家标准和 375 项推荐性国家标准实施，涉及家用电器、机器人智能控制、智能终端软件平台、电子商务等；同时全链条治理流量造假、网络暴力新规施行。",
-      "points": [
-        "标准：涉及家电、机器人智能控制、智能终端、电子商务等重要国标",
-        "监管：治理流量造假、网络暴力新规今起正式施行",
-        "免签：外交部称中俄相互免签体现两国高水平战略互信"
-      ],
-      "source": "腾讯新闻 / 中国新闻网",
-      "url": "https://www.zj.chinanews.com/jzkzj/2026-09-01/detail-ihfivshq1302029.shtml"
+      "source": "新浪新闻 / 中国科学院",
+      "url": "https://news.sina.com.cn/c/2026-09-02/doc-iniqkefq3318136.shtml"
     }
   ],
   "jobs": [
     {
-      "title": "数据分析师",
-      "company": "厦门高新人才开发有限公司",
-      "nature": "国企",
+      "title": "26届数据管培生",
+      "company": "中国平安财产保险 厦门分公司",
+      "nature": "国企/金融",
       "channel": "厦门人才网",
-      "location": "厦门市思明区（软件园）",
-      "salary": "6k-8k/月",
-      "education": "本科及以上",
-      "type": "社招",
-      "date": "2026-09-30",
+      "location": "厦门市思明区（湖滨南路）",
+      "salary": "7k-9k·14薪",
+      "education": "本科（2026届）",
+      "type": "校招/应届",
+      "date": "2026-11-30",
       "match": "高",
-      "why": "应用统计专业对口；要求 SQL + Python + Excel 数据清洗/报表，与你的技能栈高度吻合；派驻国企，双休。",
-      "url": "https://www.xmrc.com.cn/Recruit/RecruitInfo/?id=9fe486d678ac4b4a9c7ae131cb3fc61f"
+      "why": "2026 届可投，定岗分公司各条线数据类岗位；要求统计/数学/精算优先，你的应用统计背景高度契合，且 14 薪优于底线。",
+      "url": "https://www.xmrc.com.cn/Meeting/GbBookJobInfo?id=d4798bfee773483c96c6255cc5bf225e4323aa50d21e4efda083c42d82829944&jobId=4323aa50d21e4efda083c42d82829944"
     },
     {
       "title": "厦门-数据分析岗",
@@ -149,8 +149,8 @@
       "type": "社招",
       "date": "2026-10-15",
       "match": "高",
-      "why": "智联现挂“经验不限”，明确要求 Python/BI/Excel 运营数据分析；应届可投，岗位与你的背景契合，建议优先投递。",
-      "url": "https://www.quanzhi.com/job/68dca2b47f2732863fe761db"
+      "why": "智联现挂“经验不限”，要求 Python/BI/Excel 业务运营数据分析；应届可投，岗位与背景契合，建议优先投递。",
+      "url": "https://jobs.zhaopin.com/xiamen/mj97/cs5/"
     },
     {
       "title": "数据分析岗",
@@ -163,7 +163,77 @@
       "type": "社招",
       "date": "2026-10-31",
       "match": "高",
-      "why": "要求 Python/BI 做业务运营数据分析、日常通报与数据报告；金融数据方向，统计背景契合。",
+      "why": "要求 Python/BI 做业务运营数据分析、日常通报与数据报告；金融数据方向，统计背景契合，薪资达应届预期。",
+      "url": "https://www.zhaopin.com/xiamen/jinrongshujufenxi/"
+    },
+    {
+      "title": "运营数据分析岗（校招生）",
+      "company": "好慷（厦门）信息技术",
+      "nature": "民企",
+      "channel": "智联招聘",
+      "location": "厦门市集美区（杏林湾）",
+      "salary": "3k-6k·13薪",
+      "education": "本科（应届）",
+      "type": "校招",
+      "date": "2026-10-31",
+      "match": "中",
+      "why": "要求 Excel 数据处理与初步分析、统计/计算机相关专业优先；薪资低于底线，作练手 + 保底，积累业务数据经验。",
+      "url": "https://m.zhaopin.com/jobs/CC667769820J40652308909.htm"
+    },
+    {
+      "title": "数据统计分析工程师",
+      "company": "厦门伯智人力资源管理有限公司",
+      "nature": "民企",
+      "channel": "智联招聘",
+      "location": "厦门市集美区（灌口）",
+      "salary": "8k-12k/月",
+      "education": "本科 1-3 年",
+      "type": "社招",
+      "date": "2026-11-15",
+      "match": "中",
+      "why": "要求数据统计能力；结合你的应用统计 + Excel/SPSS 背景，偏业务统计方向，适合作为过渡目标。",
+      "url": "https://m.zhaopin.com/zhaopin/dacb0f9443dc4eb4a0b5439e6c54c98f/"
+    },
+    {
+      "title": "27届厦门分公司数据管培生",
+      "company": "中国平安财产保险",
+      "nature": "国企/金融",
+      "channel": "校招官网",
+      "location": "福建·厦门",
+      "salary": "面议",
+      "education": "2027届本科",
+      "type": "校招",
+      "date": "2026-11-30",
+      "match": "高",
+      "why": "2027 届可投，数学/统计/精算优先，要求基础 SQL/Python；管培生定岗数据类岗位，成长空间大，尽早投。",
+      "url": "https://campus.pingan.com/positionDetail?positionId=cebdb08d1dc8306c9d9c626ede9f52ec"
+    },
+    {
+      "title": "2026届管理培训生（数据分析方向）",
+      "company": "厦门金圆投资集团",
+      "nature": "国企",
+      "channel": "国家大学生就业平台",
+      "location": "厦门市",
+      "salary": "12k-15k/月",
+      "education": "硕士及以上",
+      "type": "校招",
+      "date": "2026-10-31",
+      "match": "中",
+      "why": "国企平台，职责含收集整理业务数据、撰写分析报告支撑决策；薪资亮眼但要求硕士，可作进阶目标。",
+      "url": "https://hnu.ncss.cn/student/m/jobs/DWisvzd6EfdT4uwciQ6Lzi/detail.html"
+    },
+    {
+      "title": "数据分析师",
+      "company": "软通动力（厦门）",
+      "nature": "民企/上市",
+      "channel": "智联招聘",
+      "location": "厦门市思明区（莲前）",
+      "salary": "1-2万/月",
+      "education": "本科 5-10 年",
+      "type": "社招",
+      "date": "2026-12-31",
+      "match": "低",
+      "why": "要求报表开发/数据建模/Python/R/BI 工具；薪资上限高但需 5 年以上经验，暂不匹配应届，作市场参照。",
       "url": "https://jobs.zhaopin.com/xiamen/mj97/cs5/"
     },
     {
@@ -179,76 +249,6 @@
       "match": "中",
       "why": "要求 Power BI/FineBI、数据治理/挖掘/建模；双休、门槛友好，适合作为练手 + 保底投递。",
       "url": "https://m.zhaopin.com/zhaopin/032c7dcb34cf40c782773f291defe577/"
-    },
-    {
-      "title": "数据分析师",
-      "company": "陕西鑫泽源慧企业",
-      "nature": "民企",
-      "channel": "智联招聘",
-      "location": "厦门市思明区（莲前）",
-      "salary": "11k-15k·13薪",
-      "education": "本科",
-      "type": "社招",
-      "date": "2026-11-30",
-      "match": "中",
-      "why": "要求 SQL、报表开发、数据挖掘、业务指标监控；薪资优于应届线，可作进阶目标。",
-      "url": "https://m.zhaopin.com/zhaopin/032c7dcb34cf40c782773f291defe577/"
-    },
-    {
-      "title": "数据统计分析工程师",
-      "company": "厦门伯智人力资源管理有限公司",
-      "nature": "民企",
-      "channel": "智联招聘",
-      "location": "厦门市集美区（灌口）",
-      "salary": "8k-12k/月",
-      "education": "本科 1-3 年",
-      "type": "社招",
-      "date": "2026-11-15",
-      "match": "中",
-      "why": "要求数据统计能力；结合你的应用统计 + Excel/SPSS 背景，偏业务统计方向，适合过渡。",
-      "url": "https://m.zhaopin.com/zhaopin/dacb0f9443dc4eb4a0b5439e6c54c98f/"
-    },
-    {
-      "title": "27届厦门分公司数据管培生",
-      "company": "中国平安财产保险 厦门分公司",
-      "nature": "国企/金融",
-      "channel": "校招官网",
-      "location": "福建·厦门",
-      "salary": "面议",
-      "education": "2027届本科",
-      "type": "校招",
-      "date": "2026-11-30",
-      "match": "高",
-      "why": "2027届可投，数学/统计/精算优先，要求基础 SQL/Python；管培生定岗数据类岗位，成长空间大。",
-      "url": "https://campus.pingan.com/positionDetail?positionId=cebdb08d1dc8306c9d9c626ede9f52ec"
-    },
-    {
-      "title": "行业研究岗 / 2027届秋招",
-      "company": "厦门国贸控股（国贸股份）",
-      "nature": "国企",
-      "channel": "校招官网",
-      "location": "厦门市",
-      "salary": "面议",
-      "education": "本科（统计/金融工程/计算机优先）",
-      "type": "校招",
-      "date": "2026-11-15",
-      "match": "高",
-      "why": "要求 Python/SQL 做大宗商品基本面量化与 AI 策略回测，统计背景契合，AI+数据方向前沿。",
-      "url": "https://career.nankai.edu.cn/correcruit/content/id/117204.html"
-    },
-    {
-      "title": "数字金融岗 / 2027届校招（含数据分析）",
-      "company": "招商银行 厦门分行",
-      "nature": "国企/股份",
-      "channel": "校招官网",
-      "location": "厦门市",
-      "salary": "面议",
-      "education": "2027届本科（统计/数学/STEM优先）",
-      "type": "校招",
-      "date": "2026-10-10",
-      "match": "中",
-      "why": "岗位含“数据分析（业务）/金融科技”，统计类优先；网申截止 10 月 10 日，建议尽早投递。",
-      "url": "http://career.cmbchina.com"
     },
     {
       "title": "高级数据工程师（数据分析）",
@@ -281,15 +281,15 @@
   "weather": {
     "city": "厦门",
     "current": {
-      "temperature": 25.5,
-      "weather_code": 80,
-      "wind_speed": 13.0,
-      "humidity": 95
+      "temperature": 26.0,
+      "weather_code": 95,
+      "wind_speed": 12.0,
+      "humidity": 90
     },
     "daily": [
-      { "date": "2026-09-01", "weather_code": 55, "max": 29.2, "min": 25.4 },
-      { "date": "2026-09-02", "weather_code": 95, "max": 26.6, "min": 24.9 },
-      { "date": "2026-09-03", "weather_code": 95, "max": 27.2, "min": 25.0 }
+      { "date": "2026-09-02", "weather_code": 95, "max": 27.0, "min": 25.0 },
+      { "date": "2026-09-03", "weather_code": 95, "max": 27.5, "min": 25.0 },
+      { "date": "2026-09-04", "weather_code": 80, "max": 28.0, "min": 25.5 }
     ]
   }
 }
